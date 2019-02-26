@@ -21,10 +21,12 @@ from django.urls import path, include
 
 from system_api.views import list_Model
 from system_api.views import list_Marque
+from system_api.views import list_Model_Marque
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('listmodel', list_Model),
-    path('listmarque', list_Marque),
+    path('Automobiliste/consultations/listmodel', list_Model),
+    path('Automobiliste/consultations/listmarque', list_Marque),
+    path('Automobiliste/consultations/modelmarque', list_Model_Marque),
 ]

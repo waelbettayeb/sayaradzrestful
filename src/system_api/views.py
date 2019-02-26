@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse,HttpResponse
 from django.shortcuts import render
+from django.db.models import Q
 from django.core.serializers import serialize
 import json
 
@@ -37,6 +38,16 @@ def list_Model(request):
     print(data)
     json_data = json.dumps(data)
     return HttpResponse(json_data,content_type='application/json')
-    # return JsonResponse(json_data)
+
+def list_Model_Marque(request):
+    obj = Modele.objects.filter(Q(Id_Marque = "c12"))
+    data = serialize("json", obj, fields = (
+        'Id_Marque',
+        'Code_Modele',
+        'Nom_Modele'
+    ))
+    print(data)
+    json_data = json.dumps(data)
+    return HttpResponse(json_data, content_type='application/json')
 
 # Create your views here.
