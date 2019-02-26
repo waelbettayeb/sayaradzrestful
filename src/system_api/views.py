@@ -16,7 +16,17 @@ def testgetone(request):
     }
     return JsonResponse(data)
 
-def testlist(request):
+def list_Marque(request):
+    obj = Marque.objects.all()
+    data = serialize("json", obj, fields=(
+        'Id_Marque',
+        'Nom_Marque'
+    ))
+    print(data)
+    json_data = json.dumps(data)
+    return HttpResponse(json_data, content_type='application/json')
+
+def list_Model(request):
 
     obj = Modele.objects.all()
     data = serialize("json",obj,fields=(

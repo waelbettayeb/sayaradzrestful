@@ -19,9 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 
-from system_api.views import testlist
+from system_api.views import list_Model
+from system_api.views import list_Marque
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('listmodel', testlist),
+    path('listmodel', list_Model),
+    path('listmarque', list_Marque),
 ]
