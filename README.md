@@ -14,3 +14,11 @@ INIT/UPDATE MODELS
 
 $ python manage.py makemigrations
 $ python manage.py migrate
+
+CREATE REQUIRE ENVIRONEMENT
+
+pip freeze > requirements.txt
+
+USE THE VIRTUAL ENVIRONEMENT
+
+pip install -r requerements.txt

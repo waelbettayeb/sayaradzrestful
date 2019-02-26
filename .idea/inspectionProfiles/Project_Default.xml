@@ -1,6 +1,7 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
+<<<<<<< HEAD
     <inspection_tool class="PyCompatibilityInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ourVersions">
         <value>
@@ -9,6 +10,13 @@
             <item index="1" class="java.lang.String" itemvalue="3.7" />
           </list>
         </value>
+=======
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="src.sayaradz.urls.system_api" />
+        </list>
+>>>>>>> d73a43399b2ee3229641220d645ca53270fecdd0
       </option>
     </inspection_tool>
   </profile>
