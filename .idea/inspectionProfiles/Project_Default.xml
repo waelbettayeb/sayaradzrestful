@@ -5,6 +5,8 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="src.sayaradz.urls.system_api" />
+          <option value="src.system_api.views.system_api" />
+          <option value="src.system_api.sereializers.system_api" />
         </list>
       </option>
     </inspection_tool>
