@@ -16,6 +16,13 @@ class Test_list(unittest.TestCase):
         self.version1 = Version.objects.create('v1', 'version1', 'mod1')
         self.version2 = Version.objects.create('v2', 'version2', 'mod2')
         self.version3 = Version.objects.create('v3', 'version3', 'mod2')
+        self.marque1.save()
+        self.modele1.save()
+        self.modele2.save()
+        self.marque2.save()
+        self.version1.save()
+        self.version2.save()
+        self.version3.save()
 
     def Test_Marque(self):
         url = reverse('list_Marque')
