@@ -6,12 +6,10 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # class Model_Manager(models.Manager):
-
-
-
 class Marque(models.Model):
     Id_Marque = models.CharField(max_length=10, primary_key=True)
     Nom_Marque = models.CharField(max_length=100)
+
 
 class Modele(models.Model):
     Code_Modele = models.CharField(max_length=10, primary_key=True)
