@@ -12,11 +12,13 @@ from django.db import models
 class Marque(models.Model):
     Id_Marque = models.CharField(max_length=10, primary_key=True)
     Nom_Marque = models.CharField(max_length=100)
+    Logo = models.ImageField
+
 
 class Modele(models.Model):
     Code_Modele = models.CharField(max_length=10, primary_key=True)
     Nom_Modele = models.CharField(max_length=100)
-    Id_Marque = models.ForeignKey(Marque, on_delete=models.CASCADE)
+    Id_Marque = models.ForeignKey(Marque,on_delete=models.CASCADE, related_name='Model_set')
 
 
 

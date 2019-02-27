@@ -1,11 +1,22 @@
 from rest_framework import serializers
 
-from src.system_api.models import Modele
-from src.system_api.models import Version
+from system_api.models import Marque
+
+from system_api.models import Modele
+
+
+class Marque_Sereializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Marque
+        fields = [
+            'Nom_Marque',
+            'Id_Marque'
+        ]
 
 
 
-class ModelSereializer(serializers.ModelSerializer):
+class Modele_Sereializer(serializers.ModelSerializer):
 
     class Meta:
         model = Modele
