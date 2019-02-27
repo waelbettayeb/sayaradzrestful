@@ -1,18 +1,16 @@
 from rest_framework import serializers
-
-from src.system_api.models import *
-
+from system_api.models import *
 
 class Marque_Sereializer(serializers.ModelSerializer):
 
     class Meta:
         model = Marque
         fields = [
-            'Code_Modele',
-            'Nom_Modele',
-            'Id_Marque',
-            'Logo_Marque'
+            'Nom_Marque',
+            'Id_Marque'
+           # 'Logo_Marque'
         ]
+
 
 class Modele_Sereializer(serializers.ModelSerializer):
 
@@ -21,15 +19,14 @@ class Modele_Sereializer(serializers.ModelSerializer):
         fields = [
             'Code_Modele',
             'Nom_Modele',
-            'Id_Marque',
-            'Photo_modele'
+            'Id_Marque'
         ]
 class Version_Sereializer(serializers.ModelSerializer):
 
     class Meta:
         model = Version
         fields = [
-            'Code_Version',
             'Nom_Version',
-            'Nom_Model'
+            'Code_Version',
+            'Id_Modele'
         ]
