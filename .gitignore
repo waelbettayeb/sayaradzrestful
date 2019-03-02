@@ -1,6 +1,6 @@
 # Created by https://www.gitignore.io
 
-.idea
+./idea
 
 ### OSX ###
 .DS_Store
@@ -87,4 +87,4 @@ target/
 __pycache__/
 local_settings.py
 
-.env
+./env

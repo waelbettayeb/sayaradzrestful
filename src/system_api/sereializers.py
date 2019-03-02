@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from system_api.models import *
+from src.system_api.models import *
+
 
 class Marque_Sereializer(serializers.ModelSerializer):
 

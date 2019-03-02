@@ -1,3 +1,4 @@
+import json
 from django.test import TestCase
 import pytest
 import unittest
@@ -8,22 +9,8 @@ from django.urls import reverse
 
 
 class Test_list(unittest.TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.marque2 = Marque.objects.create('m2', 'Marque2')
-        self.modele1 = Modele.objects.create('mod1', 'modele1', 'm1')
-        self.modele2 = Modele.objects.create('mod2', 'modele2', 'm2')
-        self.version1 = Version.objects.create('v1', 'version1', 'mod1')
-        self.version2 = Version.objects.create('v2', 'version2', 'mod2')
-        self.version3 = Version.objects.create('v3', 'version3', 'mod2')
-        self.marque1.save()
-        self.modele1.save()
-        self.modele2.save()
-        self.marque2.save()
-        self.version1.save()
-        self.version2.save()
-        self.version3.save()
 
+"""
     def Test_Marque(self):
         url = reverse('list_Marque')
         response = self.client.get(url)
@@ -36,17 +23,59 @@ class Test_list(unittest.TestCase):
         url = reverse('list_Version')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    """ def Test_Marque_Content(self):
-        marques = Marque.objects.get()
-        url = reverse('list_Marque')
-        response = self.client.get(url)
-        exp_data = {
-            {'Id_Marque': 'm1',
-            'Nom_Marque':'Marque1'
-            },
-            {'Id_Marque': 'm2',
-            'Nom_Marque':'Marque2'}
-        }
-        self.asssertEqual(exp_data, response.json())
 """
+from rest_framework.test import APITestCase, APIClient
+
+from system_api.models import *
+
+
+class ModelesAPITestCases(APITestCase):
+
+    def setUp(self):
+        renault = Marque.objects.create(Id_Marque=1, Nom_Marque='Renault')
+        peugeaut = Marque.objects.create(Id_Marque=2, Nom_Marque='Peugeot')
+
+        symbol  = Modele.objects.create(Code_Modele = 'm1', Nom_Modele = 'Symbol', Id_Marque = renault)
+        fluance = Modele.objects.create(Code_Modele = 'm2', Nom_Modele = 'fluence', Id_Marque = renault)
+        symbol.save()
+        fluance.save()
+
+        _206 = Modele.objects.create(Code_Modele='m3', Nom_Modele='206', Id_Marque=peugeaut)
+        _207 = Modele.objects.create(Code_Modele='m4', Nom_Modele='207', Id_Marque=peugeaut)
+        _206.save()
+        _207.save()
+
+    def test_retrieve_all_models(self):
+
+        """
+        Vérifie la réussite de GET Request pour récupérer la liste des modèles.
+        :return:
+        """
+        client = APIClient()
+        response = client.get('/Automobiliste/consultations/listmodel',format = 'json')
+        assert response.status_code == 200
+
+
+
+class MarquesAPITestCases(APITestCase):
+    def setUp(self):
+        marque = Marque.objects.create(Id_Marque=1, Nom_Marque='BMW')
+        marque.save()
+        modele = Modele.objects.create(Code_Modele=1, Nom_Modele='MODELE',Id_Marque=1)
+        marque.save()
+        version=Version.objects.create(Code_Version=1,Nom_Version='Version',Id_Modele=1)
+    def test_retrieve_all_marques(self):
+        """Test si le client est capable de retrouver toutes les marques avec un get request"""
+        client = APIClient()
+        response = client.get('/Automobiliste/consultations/listmarque', format = 'json')
+        assert response.status_code == 200
+        response_data = json.loads((response.content.decode('utf-8')))
+        self.assertEqual(response_data, '[{"model": "system_api.marque", "pk": "1", "fields": {"Nom_Marque": "BMW"}}]')
+    def test_retrieve_all_versions(self):
+        """Test si le client est capable de retrouver toutes les marques avec un get request"""
+        client = APIClient()
+        response = client.get('/Automobiliste/consultations/listVersion', format = 'json')
+        assert response.status_code == 200
+        response_data = json.loads((response.content.decode('utf-8')))
+        self.assertEqual(response_data, '[{"model": "system_api.marque", "pk": "1", "fields": {"Nom_Version": "Version"},{"Id_Modele": "1"}}]')
+
