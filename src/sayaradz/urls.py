@@ -17,6 +17,7 @@ urlpatterns = [
     path('Automobiliste/consultations/modelmarque', list_Model_Marque),
     path('Automobiliste/consultations/detailsmarque', liste_Marque.as_view()),
     path('Automobiliste/consultations/detailsmodel/<str:Id_Marque>', liste_Modele.as_view()),
+    path('accounts/',include('accounts.urls'))
 
 
 ]
