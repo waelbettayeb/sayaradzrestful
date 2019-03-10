@@ -4,21 +4,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.urls import path, include
-from system_api.views import list_Model
-from system_api.views import list_Marque
-from system_api.views import list_Model_Marque
-from system_api.views import liste_Marque, liste_Modele
 
+from marque.views import  ListeMarques #list_Marque,
+from modele.views import list_Model, list_Model_Marque, liste_Modele
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('Automobiliste/consultations/listmodel', list_Model),
-    path('Automobiliste/consultations/listmarque', list_Marque),
-    path('Automobiliste/consultations/modelmarque', list_Model_Marque),
-    path('Automobiliste/consultations/detailsmarque', liste_Marque.as_view()),
-    path('Automobiliste/consultations/detailsmodel/<str:Id_Marque>', liste_Modele.as_view()),
-    path('accounts/',include('accounts.urls'))
-
+    path('accounts/',include('accounts.urls')),
+    path('marque/',include('marque.urls')),
+    path('modele/',include('modele.urls')),
+    path('version/',include('version.urls'))
 
 ]
 

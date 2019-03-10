@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'system_api',
+    'marque',
+    'modele',
+    'version',
     #accounts handling
     'accounts',
     #social authentication
@@ -115,7 +117,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email']
 
 # Other Configurations
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-SOCIAL_AUTH_USER_MODEL = 'accounts.Automobiliste'
+#SOCIAL_AUTH_USER_MODEL = 'accounts.Automobiliste'
 AUTH_USER_MODEL = 'accounts.User'
 
 WSGI_APPLICATION = 'sayaradz.wsgi.application'

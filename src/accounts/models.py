@@ -57,13 +57,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class AutomobisteManger(UserManager):
-    def create_automobiliste(self, email, password, name):
-        automobiliste = super().create_user(email, password = password)
-        automobiliste.name = name
-        automobiliste.save(using= self._db)
+    pass
+
 
 class Automobiliste(User):
-    name = models.CharField(max_length=255)
     objects = AutomobisteManger()
 
 
