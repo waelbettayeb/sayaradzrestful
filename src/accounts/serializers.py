@@ -14,8 +14,14 @@ class UserSerializer(serializers.ModelSerializer):
 class AutomobilisteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Automobiliste
-        fields = ('id', 'email', 'name', 'password')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ('id', 'email')
+
+
+class FabriquantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Fabriquant
+        fields = ('email','password','nom','prenom','adresse','tel')
+        extra_kwargs = {'password' : {'write_only' : True}}
 
 
 

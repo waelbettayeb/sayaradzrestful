@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.core.validators import RegexValidator
 from django.db import models
 
 from sayaradz import settings
@@ -33,6 +34,9 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique= True)
     is_admin = models.BooleanField(default= False)
+    is_automobiliste = models.BooleanField(default=False)
+    is_fabriquant = models.BooleanField(default=False)
+    is_utilisateur_fabriquant = models.BooleanField(default=False)
     objects = UserManager()
     USERNAME_FIELD = 'email'
 
@@ -57,7 +61,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class AutomobisteManger(UserManager):
-    pass
+    def create_user(self, email, **kwargs):
+        automobiliste = super().create_user(email=email)
+        automobiliste.is_automobiliste = True
+        automobiliste.save(using=self._db)
+        return automobiliste
 
 
 class Automobiliste(User):
@@ -65,8 +73,26 @@ class Automobiliste(User):
 
 
 
+class FabriquantManager(UserManager):
+    def create_fabriquant(self, email,password, nom, prenom, adresse, tel):
+        fabriquant = super().create_user(email, password= password)
+        fabriquant.is_fabriquant = True
+        fabriquant.is_utilisateur_fabriquant = True
+        fabriquant.nom =   nom
+        fabriquant.prenom = prenom
+        fabriquant.adresse = adresse
+        fabriquant.tel = tel
+        fabriquant.save(using=self._db)
+        return fabriquant
 
 
+class Fabriquant(User):
+    nom     =           models.CharField(max_length=255)
+    prenom  =           models.CharField(max_length=255)
+    adresse =           models.CharField(max_length=255)
+    tel     =           models.CharField(max_length=12, blank=True)
+    #TODO phone number validation
+    objects = FabriquantManager()
 
 
 
