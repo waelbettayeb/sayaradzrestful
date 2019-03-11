@@ -21,10 +21,10 @@ class MarquesAPITestCases(APITestCase):
     def test_retrieve_all_marques(self):
         """Test si le client est capable de retrouver toutes les marques avec un get request"""
         client = APIClient()
-        response = client.get('/marque', format = 'json')
+        response = client.get('/marque/', format = 'json')
         marques = Marque.objects.all()
         serializer = MarqueSereializer(marques, many=True)
         assert response.status_code == 200
-        #assert len(response.data) == 1
-        #self.assertEqual(serializer.data, response.data)
-        print(response.data)
+        assert len(response.data) == 1
+        self.assertEqual(serializer.data, response.data)
+        #print(response.data)

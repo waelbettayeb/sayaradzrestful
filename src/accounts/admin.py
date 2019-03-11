@@ -18,3 +18,4 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User)
+admin.site.register(Automobiliste)

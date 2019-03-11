@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 from django.urls import path, include
 
 from marque.views import  ListeMarques #list_Marque,
-from modele.views import list_Model, list_Model_Marque, liste_Modele
 
 urlpatterns = [
     path('admin/', admin.site.urls),
