@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'marque',
     'modele',
     'version',
+    'option',
     #accounts handling
     'accounts',
     #social authentication

@@ -2,7 +2,7 @@ from rest_framework import serializers
 from marque.models import Marque
 
 
-class MarqueSereializer(serializers.ModelSerializer):
+class Marque_Sereializer(serializers.ModelSerializer):
 
     class Meta:
         model = Marque

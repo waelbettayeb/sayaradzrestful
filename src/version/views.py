@@ -4,6 +4,8 @@ from django.http import JsonResponse,HttpResponse
 from django.db.models import Q
 from django.core.serializers import serialize
 import json
+
+from rest_framework import generics
 from rest_framework.generics import ListAPIView
 
 # Create your views here.
@@ -26,3 +28,8 @@ class VersionByModele(ListAPIView):
         modele = get_object_or_404(Modele, Code_Modele=Id_Modele)
 
         return modele.Version_set
+
+class NewVersion(generics.ListCreateAPIView):
+    queryset = Version.objects.all()
+    serializer_class = Version_Sereializer
+    # permission_classes = (IsAdminUser,)
