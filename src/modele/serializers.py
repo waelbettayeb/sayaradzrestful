@@ -10,5 +10,6 @@ class Modele_Sereializer(serializers.ModelSerializer):
         fields = [
             'Code_Modele',
             'Nom_Modele',
-            'Id_Marque'
+            'Id_Marque',
+            'Image'
         ]

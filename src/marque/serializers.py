@@ -8,6 +8,6 @@ class MarqueSereializer(serializers.ModelSerializer):
         model = Marque
         fields = [
             'Nom_Marque',
-            'Id_Marque'
-           # 'Logo_Marque'
+            'Id_Marque',
+            'Logo'
         ]
