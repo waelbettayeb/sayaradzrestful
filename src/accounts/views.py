@@ -15,25 +15,18 @@ class FabriquantView(ListCreateAPIView):
     def get_queryset(self):
         return models.Fabriquant.objects.all()
 
-class UserView(ListCreateAPIView):
 
+class UtilisateurFabriquantView(ListCreateAPIView):
+    serializer_class = serializers.UtilisateurFabrquantSerailizer
+
+    def get_queryset(self):
+        return models.UtilisateurFabriquant.objects.all()
+
+
+class UserView(ListCreateAPIView):
     serializer_class = serializers.UserSerializer
 
     def get_queryset(self):
         return models.User.objects.all()
 
-    def post(self, request, *args, **kwargs):
-        serializer = serializers.FabriquantSerializer(data = request.data)
-        if serializer.is_valid():
-            Fabriquant.objects.create_fabriquant(
-                serializer.get('email'),
-                serializer.get('password'),
-                serializer.get('nom'),
-                serializer.get('prenom'),
-                serializer.get('adresse'),
-                serializer.get('tel')
-            )
-            return Response(status= status.HTTP_201_CREATED)
-
-        return Response(status= status.HTTP_400_BAD_REQUEST)
 

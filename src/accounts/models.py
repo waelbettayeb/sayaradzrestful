@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import RegexValidator
 from django.db import models
+from marque.models import Marque
 
 from sayaradz import settings
 
@@ -32,7 +33,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=255, unique= True)
+    email = models.EmailField(max_length=255, unique= True, primary_key= True)
     is_admin = models.BooleanField(default= False)
     is_automobiliste = models.BooleanField(default=False)
     is_fabriquant = models.BooleanField(default=False)
@@ -74,14 +75,15 @@ class Automobiliste(User):
 
 
 class FabriquantManager(UserManager):
-    def create_fabriquant(self, email,password, nom, prenom, adresse, tel):
-        fabriquant = super().create_user(email, password= password)
+    def create_user(self, email, **kwargs):
+        fabriquant = super().create_user(email)
         fabriquant.is_fabriquant = True
         fabriquant.is_utilisateur_fabriquant = True
-        fabriquant.nom =   nom
-        fabriquant.prenom = prenom
-        fabriquant.adresse = adresse
-        fabriquant.tel = tel
+        fabriquant.nom = kwargs['nom']
+        fabriquant.prenom = kwargs['prenom']
+        fabriquant.adresse = kwargs['adresse']
+        fabriquant.tel = kwargs['tel']
+        fabriquant.marque = kwargs['marque']
         fabriquant.save(using=self._db)
         return fabriquant
 
@@ -91,8 +93,53 @@ class Fabriquant(User):
     prenom  =           models.CharField(max_length=255)
     adresse =           models.CharField(max_length=255)
     tel     =           models.CharField(max_length=12, blank=True)
+    marque  =           models.OneToOneField(Marque,on_delete=models.CASCADE, null=True, parent_link=False, primary_key=False)
     #TODO phone number validation
     objects = FabriquantManager()
 
 
 
+
+class UtilisateurFabriquantManager(UserManager):
+
+
+    def create_user(self, email, **kwargs):
+        utilisateur_fabriquant = super().create_user(email, password= kwargs['password'])
+        utilisateur_fabriquant.is_utilisateur_fabriquant = True
+        utilisateur_fabriquant.nom = kwargs['nom']
+        utilisateur_fabriquant.prenom = kwargs['prenom']
+        utilisateur_fabriquant.adresse = kwargs['adresse']
+        utilisateur_fabriquant.tel = kwargs['tel']
+        if kwargs['fabriquant'] is None:
+            raise ValueError("L'utilisateur fabriquant doit avoir un fabriquant")
+        utilisateur_fabriquant.fabriquant = kwargs['fabriquant']
+
+        utilisateur_fabriquant.save(using=self._db)
+        return utilisateur_fabriquant
+
+
+class UtilisateurFabriquant(User):
+    nom     =           models.CharField(max_length=255)
+    prenom  =           models.CharField(max_length=255)
+    adresse =           models.CharField(max_length=255)
+    tel     =           models.CharField(max_length=12, blank=True)
+    fabriquant  =           models.ForeignKey(Fabriquant,
+                                              on_delete=models.CASCADE,
+                                              primary_key=False,parent_link=False,
+                                              name= 'Fabriquant',
+                                              null=True)
+    #TODO phone number validation
+    objects = UtilisateurFabriquantManager()
+
+
+
+class AdministratuerManager(UserManager):
+    def create_user(self, email, **kwargs):
+        adiministrateur = super().create_superuser(email=email, password= kwargs['password'])
+        adiministrateur.save(using=self._db)
+        return adiministrateur
+
+
+class Administratuer(User):
+
+    objects = AutomobisteManger()
