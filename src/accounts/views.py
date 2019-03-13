@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, CreateAPIView
 from rest_framework.response import Response
 
 from accounts.models import Fabriquant
@@ -13,14 +13,18 @@ class FabriquantView(ListCreateAPIView):
 
     serializer_class = serializers.FabriquantSerializer
     def get_queryset(self):
-        return models.Fabriquant.objects.all()
+        return models.Fabriquant.objects.filter(marque = self.request.user.marque)
 
 
-class UtilisateurFabriquantView(ListCreateAPIView):
-    serializer_class = serializers.UtilisateurFabrquantSerailizer
+class AdminFabriquant(CreateAPIView):
+    serializer_class = serializers.AdminFabriquantSerializer
 
-    def get_queryset(self):
-        return models.UtilisateurFabriquant.objects.all()
+
+# class UtilisateurFabriquantView(ListCreateAPIView):
+#     serializer_class = serializers.UtilisateurFabrquantSerailizer
+#
+#     def get_queryset(self):
+#         return models.UtilisateurFabriquant.objects.all()
 
 
 class UserView(ListCreateAPIView):

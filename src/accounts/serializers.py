@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from accounts.models import Automobiliste
+from accounts.models import Automobiliste, Fabriquant
 from . import models
 
 
@@ -23,12 +23,17 @@ class FabriquantSerializer(serializers.ModelSerializer):
         fields = ('email','password','nom','prenom','adresse','tel','marque')
         extra_kwargs = {'password' : {'write_only' : True}}
 
+class AdminFabriquantSerializer(FabriquantSerializer):
 
-class UtilisateurFabrquantSerailizer(serializers.ModelSerializer):
-    class Meta:
-        model = models.UtilisateurFabriquant
-        fields = ('email','password','nom','prenom','tel','Fabriquant')
-        extra_kwargs = {'password' : {'write_only' : True}}
+    def create(self, validated_data):
+        return Fabriquant.objects.create_superuser(**validated_data)
+
+
+# class UtilisateurFabrquantSerailizer(serializers.ModelSerializer):
+#     class Meta:
+#         model = models.UtilisateurFabriquant
+#         fields = ('email','password','nom','prenom','tel','Fabriquant')
+#         extra_kwargs = {'password' : {'write_only' : True}}
 
 class AdministratuerSerializer(serializers.ModelSerializer):
     class Meta:
