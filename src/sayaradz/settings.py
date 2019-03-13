@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'modele',
     'version',
     'option',
+    'couleur',
     #accounts handling
     'accounts',
     #social authentication

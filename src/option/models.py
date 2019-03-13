@@ -5,12 +5,12 @@ from version.models import Version
 
 
 class Option(models.Model):
-    Code_Option = models.CharField(max_length=10, primary_key=True)
+    Code_Option = models.CharField(max_length=20, primary_key=True)
     Nom_Option = models.CharField(max_length=100)
-    Compatible = models.ManyToManyField(Version,through='Compatibilité',through_fields=('option','version'))
+    Compatible = models.ManyToManyField(Version,through='Compatibilite',through_fields=('option','version'))
     # Defaut = models.ManyToManyField(Version,through='Defaut',through_fields=('option','version'))
 
-class Compatibilité(models.Model):
+class Compatibilite(models.Model):
     option = models.ForeignKey(Option, on_delete=models.CASCADE)
     version = models.ForeignKey(Version, on_delete=models.CASCADE)
 #

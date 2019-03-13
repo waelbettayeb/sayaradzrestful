@@ -1,6 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from version.models import Version
+from couleur.models import Couleur
 
-admin.site.register(Version)
+admin.site.register(Couleur)
