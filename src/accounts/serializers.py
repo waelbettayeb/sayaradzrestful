@@ -37,7 +37,7 @@ class AdminFabriquantSerializer(FabriquantSerializer):
 
 class AdministratuerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Administratuer
+        model = models.Administrateur
         fields = ('password', 'email')
         extra_kwargs = {'password': {'write_only': True}}
 

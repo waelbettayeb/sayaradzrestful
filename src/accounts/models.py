@@ -158,12 +158,12 @@ class Fabriquant(User):
 
 
 class AdministratuerManager(UserManager):
-    def create_user(self, email, **kwargs):
+    def create_superuser(self, email, **kwargs):
         adiministrateur = super().create_superuser(email=email, password= kwargs['password'])
         adiministrateur.save(using=self._db)
         return adiministrateur
 
 
-class Administratuer(User):
+class Administrateur(User):
 
-    objects = AutomobisteManger()
+    objects = AdministratuerManager()

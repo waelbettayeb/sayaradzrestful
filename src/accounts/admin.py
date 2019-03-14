@@ -3,13 +3,13 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import User, Automobiliste
 
+from . import models
 
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton
 class AutomobilisteInline(admin.StackedInline):
-    model = Automobiliste
+    model = models.Automobiliste
     can_delete = False
     verbose_name_plural = 'automobiste'
 class UserAdmin(BaseUserAdmin):
@@ -17,5 +17,7 @@ class UserAdmin(BaseUserAdmin):
     inlines = (AutomobilisteInline)
 
 
-admin.site.register(User)
-admin.site.register(Automobiliste)
+admin.site.register(models.User)
+admin.site.register(models.Automobiliste)
+admin.site.register(models.Fabriquant)
+admin.site.register(models.Administrateur)
