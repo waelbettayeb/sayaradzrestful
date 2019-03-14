@@ -43,5 +43,6 @@ class IsUsersOwner(permissions.BasePermission):
 
         if request.user.is_admin_fabriquant :
             perimssion = int(request.user.marque.Id_Marque) == obj
+            print(perimssion)
             return perimssion
 

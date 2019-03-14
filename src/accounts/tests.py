@@ -93,6 +93,7 @@ class ListFabriquantTestCases(APITestCase):
         # Check if there are nor errors while rquesting the view
         client = APIClient()
         response = client.get('/accounts/fabriquant/utlisateur/1')
+        self.assertEqual(str(response.data['detail']), "Authentication credentials were not provided.")
         assert response.status_code == 403
 
     def test_fail_list_fabriquant_not_allowed(self):
@@ -105,20 +106,147 @@ class ListFabriquantTestCases(APITestCase):
 
 class CreateUtilisateurFabriquantTestCases(APITestCase):
 
+    def setUp(self):
+        renault = Marque.objects.create(Id_Marque=1, Nom_Marque='Renault')
+        renault.save()
+        peugeot = Marque.objects.create(Id_Marque=2, Nom_Marque='Peugeot')
+        peugeot.save()
+
+        admin_renault = Fabriquant.objects.create_superuser("admin@renault.dz",
+                                                           password="testpassword",
+                                                           nom="Zaidi",
+                                                           prenom="Hamza",
+                                                           adresse="Bouchaoui",
+                                                           tel="023228511",
+                                                           marque=renault
+                                                           )
+        admin_renault.save()
+
+        user_renault = Fabriquant.objects.create_user("user1@renault.dz",
+                                                           password="testpassword",
+                                                           nom="Zaidi",
+                                                           prenom="Hamza",
+                                                           adresse="Bouchaoui",
+                                                           tel="023228511",
+                                                           marque=renault
+                                                           )
+        user_renault.save()
+
+        admin_peugeot = Fabriquant.objects.create_superuser("admin@peugeot.dz",
+                                                            password="testpassword",
+                                                            nom="Zaidi",
+                                                            prenom="Hamza",
+                                                            adresse="Bouchaoui",
+                                                            tel="023228511",
+                                                            marque=peugeot
+                                                            )
+        admin_peugeot.save()
+
+        user_peugeot = Fabriquant.objects.create_user("user1@peugeot.dz",
+                                                      password="testpassword",
+                                                      nom="Zaidi",
+                                                      prenom="Hamza",
+                                                      adresse="Bouchaoui",
+                                                      tel="023228511",
+                                                      marque=peugeot
+                                                      )
+        user_peugeot.save()
+
+
     def test_fail_crete_utilisateur_fabriquant_not_authenticated(self):
-        #TODO
-        pass
+        client = APIClient()
+        data = {
+            'email': "user2@renault.dz",
+            'password': "123456235",
+            'nom': "Nom user2",
+            'prenom': "user2",
+            'adresse': "Adresse user2",
+            'tel': "0265884135",
+            'marque': 1
+        }
+        response = client.post('/accounts/fabriquant/utilisateur', data)
+        self.assertEqual(str(response.data['detail']), "Authentication credentials were not provided.")
+        assert response.status_code == 403
+
 
     def test_fail_create_utilisateur_fabriquant_by_not_owner(self):
-        #TODO
-        pass
+        client = APIClient()
+        user = Fabriquant.objects.get(email="admin@renault.dz")
+        client.force_authenticate(user=user)
+        data = {
+            'email': "user2@renault.dz",
+            'password': "123456235",
+            'nom': "Nom user2",
+            'prenom': "user2",
+            'adresse': "Adresse user2",
+            'tel': "0265884135",
+            'marque': 2
+        }
+        response = client.post('/accounts/fabriquant/utilisateur', data)
+        self.assertEqual(str(response.data['detail']), "You do not have permission to perform this action.")
+        assert response.status_code == 403
 
-    def test_create_ulisateur_fabriquant_by_admin_fabriquat(self):
-        #TODO
-        pass
+    def test_fail_create_utilisateur_by_non_admin(self):
+        client = APIClient()
+        user = Fabriquant.objects.get(email="user1@renault.dz")
+        client.force_authenticate(user=user)
+        data = {
+            'email': "user2@renault.dz",
+            'password': "123456235",
+            'nom': "Nom user2",
+            'prenom': "user2",
+            'adresse': "Adresse user2",
+            'tel': "0265884135",
+            'marque': 1
+        }
+        response = client.post('/accounts/fabriquant/utilisateur', data)
+        self.assertEqual(str(response.data['detail']), "You do not have permission to perform this action.")
+        assert response.status_code == 403
+
+    def test_create_utilisateur_fabriquant_by_admin_fabriquat(self):
+        client = APIClient()
+        admin_renault = Fabriquant.objects.get(email="admin@renault.dz")
+        client.force_authenticate(user=admin_renault)
+        data = {
+            'email' : "user2@renault.dz",
+            'password' : "123456235",
+            'nom' : "Nom user2",
+            'prenom' : "user2",
+            'adresse' : "Adresse user2",
+            'tel' : "0265884135",
+            'marque' : 1
+        }
+        try:
+           user = Fabriquant.objects.get(email = "user2@renault.dz")
+        except:
+            user = None
+        assert user == None
+        response = client.post('/accounts/fabriquant/utilisateur', data)
+        assert response.status_code == 201
+        expected_user = Fabriquant.objects.get(email = "user2@renault.dz")
+        assert expected_user  != None
+
+
     def test_create_utilisateur_fabriquant_by_admin(self):
-        #TODO
-        pass
+
+        admin = Administrateur.objects.create_superuser(
+            email="admin@sayara.dz",
+            password="adminadmin"
+        )
+        client = APIClient()
+        client.force_authenticate(user=admin)
+        data = {
+            'email': "user2@renault.dz",
+            'password': "123456235",
+            'nom': "Nom user2",
+            'prenom': "user2",
+            'adresse': "Adresse user2",
+            'tel': "0265884135",
+            'marque': 1
+        }
+        response = client.post('/accounts/fabriquant/utilisateur',data)
+        print(response.data)
+        assert response.status_code == 201
 
 class UpdateUtilisateurFabriquantTestCases(APITestCase):
     pass

@@ -15,6 +15,10 @@ class FabriquantView(CreateAPIView):
     permission_classes = [permissions.IsUsersOwner, IsAuthenticated]
     serializer_class = serializers.FabriquantSerializer
 
+    def post(self, request, *args, **kwargs):
+        self.check_object_permissions(request, int(request.data['marque']))
+        return super().post(request, *args, **kwargs)
+
 
 class ListUtilisateurFabriquantView(ListAPIView):
     serializer_class = serializers.FabriquantSerializer
