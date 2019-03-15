@@ -23,6 +23,16 @@ class FabriquantSerializer(serializers.ModelSerializer):
         fields = ('email','password','nom','prenom','adresse','tel','marque')
         extra_kwargs = {'password' : {'write_only' : True}}
 
+class UpdateFabriquantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Fabriquant
+        fields = ('email', 'password', 'nom', 'prenom', 'adresse', 'tel')
+        extra_kwargs = {'password': {'write_only': True}}
+
+        #TODO ensure that the admin can update the password
+
+
+
 class AdminFabriquantSerializer(FabriquantSerializer):
 
     def create(self, validated_data):

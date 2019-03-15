@@ -2,7 +2,8 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView, CreateAPIView, ListAPIView
+from rest_framework.generics import ListCreateAPIView, CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, \
+    get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -44,13 +45,37 @@ class ListUtilisateurFabriquantView(ListAPIView):
 
 
 class AdminFabriquantCreation(CreateAPIView):
-    serializer_class = serializers.AdminFabriquantSerializer
-    permission_classes = [permissions.CanCreateAdminFabriquant]
 
-class UserView(ListCreateAPIView):
-    serializer_class = serializers.UserSerializer
+    """ Offre un end point pour la création des administrateur fabriquant
+        Les administrateur de fabriquant peuvent créer leurs propre compte
+        ou leurs compte pevent être créés par l'administrateur
+        Assure que un seul administrateur est crée par fabriquant
+    """
+    serializer_class = serializers.AdminFabriquantSerializer
+    permission_classes = [permissions.CanCreateAdminFabriquant, ]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            admin_fabriquant = Fabriquant.objects.get(is_admin_fabriquant= True)
+            eroors = {
+                'detail' : 'Only one administrator is allowed by manufacturer.',
+                'user' : admin_fabriquant.email
+            }
+            return Response(eroors, status.HTTP_400_BAD_REQUEST)
+        except:
+            return super().post(request, *args, **kwargs)
+
+class RUDUtilisateurFabriquant(RetrieveUpdateDestroyAPIView):
+
+    """ Offre un end point pour :
+        Voir les détail d'un utilisateur
+        Modifier les données d'un utilisateur
+        Supprimer un utilisateur
+    """
+    serializer_class = serializers.FabriquantSerializer
+    permission_classes = (IsAuthenticated, permissions.CanUpdateUtilisateurFabriquant)
+    lookup_field = 'email'
 
     def get_queryset(self):
-        return models.User.objects.all()
-
+        return Fabriquant.objects.all()
 

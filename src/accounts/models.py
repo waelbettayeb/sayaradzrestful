@@ -123,37 +123,6 @@ class Fabriquant(User):
 
 
 
-#
-# class UtilisateurFabriquantManager(UserManager):
-#
-#
-#     def create_user(self, email, **kwargs):
-#         utilisateur_fabriquant = super().create_user(email, password= kwargs['password'])
-#         utilisateur_fabriquant.is_utilisateur_fabriquant = True
-#         utilisateur_fabriquant.nom = kwargs['nom']
-#         utilisateur_fabriquant.prenom = kwargs['prenom']
-#         utilisateur_fabriquant.adresse = kwargs['adresse']
-#         utilisateur_fabriquant.tel = kwargs['tel']
-#         if kwargs['fabriquant'] is None:
-#             raise ValueError("L'utilisateur fabriquant doit avoir un fabriquant")
-#         utilisateur_fabriquant.fabriquant = kwargs['fabriquant']
-#
-#         utilisateur_fabriquant.save(using=self._db)
-#         return utilisateur_fabriquant
-#
-#
-# class UtilisateurFabriquant(User):
-#     nom     =           models.CharField(max_length=255)
-#     prenom  =           models.CharField(max_length=255)
-#     adresse =           models.CharField(max_length=255)
-#     tel     =           models.CharField(max_length=12, blank=True)
-#     fabriquant  =           models.ForeignKey(Fabriquant,
-#                                               on_delete=models.CASCADE,
-#                                               primary_key=False,parent_link=False,
-#                                               name= 'Fabriquant',
-#                                               null=True)
-#     #TODO phone number validation
-#     objects = UtilisateurFabriquantManager()
 
 
 
