@@ -46,3 +46,8 @@ class IsUsersOwner(permissions.BasePermission):
             print(perimssion)
             return perimssion
 
+class CanCreateAdminFabriquant(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        return request.user.is_anonymous or request.user.is_admin
+

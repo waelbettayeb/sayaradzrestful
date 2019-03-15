@@ -249,6 +249,68 @@ class CreateUtilisateurFabriquantTestCases(APITestCase):
         assert response.status_code == 201
 
 class UpdateUtilisateurFabriquantTestCases(APITestCase):
+
+    def setUp(self):
+        renault = Marque.objects.create(Id_Marque=1, Nom_Marque='Renault')
+        renault.save()
+        peugeot = Marque.objects.create(Id_Marque=2, Nom_Marque='Peugeot')
+        peugeot.save()
+
+        admin_renault = Fabriquant.objects.create_superuser("admin@renault.dz",
+                                                           password="testpassword",
+                                                           nom="Zaidi",
+                                                           prenom="Hamza",
+                                                           adresse="Bouchaoui",
+                                                           tel="023228511",
+                                                           marque=renault
+                                                           )
+        admin_renault.save()
+
+        user_renault = Fabriquant.objects.create_user("user1@renault.dz",
+                                                           password="testpassword",
+                                                           nom="Zaidi",
+                                                           prenom="Hamza",
+                                                           adresse="Bouchaoui",
+                                                           tel="023228511",
+                                                           marque=renault
+                                                           )
+        user_renault.save()
+
+        admin_peugeot = Fabriquant.objects.create_superuser("admin@peugeot.dz",
+                                                            password="testpassword",
+                                                            nom="Zaidi",
+                                                            prenom="Hamza",
+                                                            adresse="Bouchaoui",
+                                                            tel="023228511",
+                                                            marque=peugeot
+                                                            )
+        admin_peugeot.save()
+
+        user_peugeot = Fabriquant.objects.create_user("user1@peugeot.dz",
+                                                      password="testpassword",
+                                                      nom="Zaidi",
+                                                      prenom="Hamza",
+                                                      adresse="Bouchaoui",
+                                                      tel="023228511",
+                                                      marque=peugeot
+                                                      )
+        user_peugeot.save()
+
+    def test_update_utilisateur_by_admin(self):
+        #TODO implement
+        pass
+
+    def test_update_utilisateur_by_admin_fabriquant(self):
+        #TODO implement
+        pass
+
+    def test_fail_update_utilisateur_by_non_owner(self):
+        pass
+
+    def test_fail_update_utilisateur_by_non_woner(self):
+        pass
+
+
     pass
 
 
@@ -256,13 +318,45 @@ class UpdateUtilisateurFabriquantTestCases(APITestCase):
 
 class CreateAdminFabriquantTestCases(APITestCase):
 
+
+
     def test_register_admin_fabriquant(self):
-        #TODO
-        pass
+        client = APIClient()
+        BMW = Marque.objects.create(Id_Marque = 3, Nom_Marque = "BMW")
+        BMW.save()
+
+        data = {
+            'email' : "admin@bmw.dz",
+            'password' :"adminadmin",
+            'nom': "Nom admin Bmw",
+            'prenom': "Prenom admin Bmw",
+            'adresse': "Adresse admin Bmw",
+            'tel': "0265884135",
+            'marque': 3
+        }
+        response = client.post('/accounts/fabriquant',data)
+        assert response.status_code == 201
+
 
     def test_create_amdin_fabriquant_by_admin(self):
-        #TODO
-        pass
+        client = APIClient()
+        admin = Administrateur.objects.create_superuser(email='admin@sayara.dz', password = 'adminadmin')
+        client.force_authenticate(user=admin)
+        BMW = Marque.objects.create(Id_Marque=3, Nom_Marque="BMW")
+        BMW.save()
+
+        data = {
+            'email': "admin@bmw.dz",
+            'password': "adminadmin",
+            'nom': "Nom admin Bmw",
+            'prenom': "Prenom admin Bmw",
+            'adresse': "Adresse admin Bmw",
+            'tel': "0265884135",
+            'marque': 3
+        }
+        response = client.post('/accounts/fabriquant', data)
+        assert response.status_code == 201
+
 
     def test_fail_create_second_admin_by_anonymos(self):
         #TODO

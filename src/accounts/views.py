@@ -12,6 +12,10 @@ from . import models
 from . import permissions
 
 class FabriquantView(CreateAPIView):
+
+    """Offre un end point pour créer des utilisatuers fabriquant
+        L'utilisatuer doit être authentifé en tant qu'administrateur ou administrateur fabriquant
+    """
     permission_classes = [permissions.IsUsersOwner, IsAuthenticated]
     serializer_class = serializers.FabriquantSerializer
 
@@ -21,6 +25,12 @@ class FabriquantView(CreateAPIView):
 
 
 class ListUtilisateurFabriquantView(ListAPIView):
+
+    """ Offre un end point pour lister les utilisateurs d'un fabriquant.
+        L'utilisatuer doit être authentifé en tant qu'administrateur ou administrateur fabriquant
+        Les administrateur fabriquant peuvent voir leurs prores utilisateurs
+        L'administrateur peut voir les utilisateurs de tout les fabriquants
+    """
     serializer_class = serializers.FabriquantSerializer
     permission_classes = [permissions.IsUsersOwner, IsAuthenticated]
     lookup_field = 'marque'
@@ -35,7 +45,7 @@ class ListUtilisateurFabriquantView(ListAPIView):
 
 class AdminFabriquantCreation(CreateAPIView):
     serializer_class = serializers.AdminFabriquantSerializer
-
+    permission_classes = [permissions.CanCreateAdminFabriquant]
 
 class UserView(ListCreateAPIView):
     serializer_class = serializers.UserSerializer
