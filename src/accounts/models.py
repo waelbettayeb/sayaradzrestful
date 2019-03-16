@@ -2,6 +2,8 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import RegexValidator
 from django.db import models
+from django.db.models import Q
+
 from marque.models import Marque
 
 from sayaradz import settings
@@ -38,6 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_automobiliste = models.BooleanField(default=False)
     is_admin_fabriquant = models.BooleanField(default=False)
     is_fabriquant = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     objects = UserManager()
     USERNAME_FIELD = 'email'
 
@@ -110,6 +113,10 @@ class FabriquantManager(UserManager):
         admin_fabriquant.is_admin_fabriquant = True
         admin_fabriquant.save(using=self._db)
         return admin_fabriquant
+
+    def has_admin(self, marque):
+        return self.filter(Q(marque_id=marque) & Q(is_admin_fabriquant=True)).count() > 0
+
 
 
 class Fabriquant(User):

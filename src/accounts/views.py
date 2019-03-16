@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
@@ -52,18 +53,12 @@ class AdminFabriquantCreation(CreateAPIView):
         Assure que un seul administrateur est crée par fabriquant
     """
     serializer_class = serializers.AdminFabriquantSerializer
-    permission_classes = [permissions.CanCreateAdminFabriquant, ]
+    permission_classes = [permissions.CanCreateAdminFabriquant,  ]
 
     def post(self, request, *args, **kwargs):
-        try:
-            admin_fabriquant = Fabriquant.objects.get(is_admin_fabriquant= True)
-            eroors = {
-                'detail' : 'Only one administrator is allowed by manufacturer.',
-                'user' : admin_fabriquant.email
-            }
-            return Response(eroors, status.HTTP_400_BAD_REQUEST)
-        except:
-            return super().post(request, *args, **kwargs)
+        self.check_object_permissions(request,request)
+        return super().post(request, *args, **kwargs)
+
 
 class RUDUtilisateurFabriquant(RetrieveUpdateDestroyAPIView):
 
@@ -79,3 +74,7 @@ class RUDUtilisateurFabriquant(RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return Fabriquant.objects.all()
 
+    def get_serializer_class(self):
+        if self.request.method == 'PATCH':
+            return serializers.ActiveFabriquantSerilizer
+        return self.serializer_class

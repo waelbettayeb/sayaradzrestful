@@ -31,6 +31,13 @@ class UpdateFabriquantSerializer(serializers.ModelSerializer):
 
         #TODO ensure that the admin can update the password
 
+class ActiveFabriquantSerilizer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Fabriquant
+        fields = ('email', 'password', 'nom', 'prenom', 'adresse', 'tel', 'is_active')
+        extra_kwargs = {'password': {'write_only': True}}
+
+
 
 
 class AdminFabriquantSerializer(FabriquantSerializer):
