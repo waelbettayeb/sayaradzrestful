@@ -780,9 +780,8 @@ class WebAuthenticationTestCases(APITestCase):
             'client_secret': app.client_secret
         }
 
-        client = APIClient()
-        response = client.post('/accounts/token', data)
-        return response
+        return data
+
 
 
     def create_utlisateur_fabriquant(self, email, password, marque):
@@ -813,6 +812,9 @@ class WebAuthenticationTestCases(APITestCase):
                                               )
         user.save()
 
+    def create_authentication_header(self, token):
+        return "Bearer {}".format(token)
+
     def test_admin_authentication(self):
 
         response = self.authenticate_user('admin@sayara.dz','adminadmin')
@@ -826,15 +828,14 @@ class WebAuthenticationTestCases(APITestCase):
 
     def test_admin_fabriquant_authentication(self):
         self.create_admin_fabriquant('admin@renault.dz','password',1)
-        response = self.authenticate_user('admin@renault.dz', 'password')
-        print(response.data)
+        data = self.authenticate_user('admin@renault.dz', 'password')
+        client = APIClient()
+        response = client.post('/accounts/token', data)
         assert response.status_code == 200
         access_token = response.data['access_token']
-        user = AccessToken.objects.get(token=access_token).user
-        assert user.is_admin == False
-        assert user.is_admin_fabriquant
-        assert user.is_fabriquant
-        assert user.is_automobiliste == False
-        assert user.marque == 1
+        header = self.create_authentication_header(access_token)
+        response = client.get('/accounts/fabriquant/utilisateur/admin@renault.dz',
+                              HTTP_AUTHORIZATION = header)
+        print(response.data)
 
 

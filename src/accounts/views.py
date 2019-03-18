@@ -12,6 +12,7 @@ from accounts.models import Fabriquant
 from . import serializers
 from . import models
 from . import permissions
+from oauth2_provider.contrib.rest_framework import OAuth2Authentication
 
 class FabriquantView(CreateAPIView):
 
@@ -69,6 +70,7 @@ class RUDUtilisateurFabriquant(RetrieveUpdateDestroyAPIView):
     """
     serializer_class = serializers.FabriquantSerializer
     permission_classes = (IsAuthenticated, permissions.CanUpdateUtilisateurFabriquant)
+    authentication_classes = [OAuth2Authentication, ]
     lookup_field = 'email'
 
     def get_queryset(self):

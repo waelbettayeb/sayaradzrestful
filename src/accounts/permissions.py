@@ -34,15 +34,16 @@ class IsUsersOwner(permissions.BasePermission):
         return request.user.is_admin or request.user.is_admin_fabriquant
 
     def has_object_permission(self, request, view, obj):
-
-        if request.user.is_anonymous :
+        user = request.user
+        if user.is_anonymous :
             return False
 
-        if request.user.is_admin :
+        if user.is_admin :
             return True
 
-        if request.user.is_admin_fabriquant :
-            perimssion = int(request.user.marque.Id_Marque) == obj
+        if user.is_admin_fabriquant :
+            admin_fabriquan = Fabriquant.objects.get(email=user.email)
+            perimssion = int(admin_fabriquan.marque.Id_Marque) == obj
             return perimssion
 
 class CanCreateAdminFabriquant(permissions.BasePermission):
@@ -67,7 +68,8 @@ class CanUpdateUtilisateurFabriquant(permissions.BasePermission):
             return True
 
         if user.is_admin_fabriquant:
-            permission = str(user.marque) == str(obj.marque)
+            admin_fabriquan = Fabriquant.objects.get(email = user.email)
+            permission = str(admin_fabriquan.marque) == str(obj.marque)
             if 'is_active' in request.data.keys():
                 permission = permission and str(user.email) != str(obj.email)
             return permission
@@ -77,4 +79,5 @@ class CanUpdateUtilisateurFabriquant(permissions.BasePermission):
                 return False
             if request.method == 'DELETE':
                 return False
-            return str(user.email) == (obj.email)
+            user_fabriquan = Fabriquant.objects.get(email=user.email)
+            return str(user_fabriquan.email) == (obj.email)
