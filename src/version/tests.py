@@ -22,7 +22,4 @@ class VersionApiTest(APITestCase):
         client = APIClient()
         response = client.get('/version/', format = 'json')
         assert response.status_code == 200
-        # response_data = json.loads((response.content.decode('utf-8')))
-        # self.assertEqual(response_data, '[{"model": "system_api.marque", "pk": "1", "fields": {"Nom_Version": "Version"},{"Id_Modele": "1"}}]')
-
-
+        assert len(response.data) == 1

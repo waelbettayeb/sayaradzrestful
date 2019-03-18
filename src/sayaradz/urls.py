@@ -16,6 +16,8 @@ urlpatterns = [
     path('modele/',include('modele.urls')),
     path('version/',include('version.urls')),
     path('option/', include('option.urls')),
+    path('couleur/', include('couleur.urls')),
+    path('tarif/', include('tarif.urls')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT,})
 
 ]
