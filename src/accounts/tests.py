@@ -9,6 +9,7 @@ from accounts.serializers import FabriquantSerializer
 from . import views
 from marque.models import Marque
 from . import urls
+from oauth2_provider.models import *
 
 
 class ListFabriquantTestCases(APITestCase):
@@ -756,3 +757,84 @@ class CreateAdminFabriquantTestCases(APITestCase):
             Fabriquant.objects.get(email="admin2@renault.dz")
         except:
             assert True
+
+
+class WebAuthenticationTestCases(APITestCase):
+
+    def authenticate_user(self, email, password):
+        admin = Administrateur.objects.create_superuser(email='admin@sayara.dz', password='adminadmin')
+        admin.save()
+
+        app = Application.objects.create(
+            client_type=Application.CLIENT_CONFIDENTIAL,
+            authorization_grant_type=Application.GRANT_PASSWORD,
+            name='SayaraDZWeb',
+            user=admin
+        )
+
+        data = {
+            'grant_type': "password",
+            'username': email,
+            'password': password,
+            'client_id': app.client_id,
+            'client_secret': app.client_secret
+        }
+
+        client = APIClient()
+        response = client.post('/accounts/token', data)
+        return response
+
+
+    def create_utlisateur_fabriquant(self, email, password, marque):
+        created_marque = Marque.objects.create(Id_Marque=marque, Nom_Marque='Renault')
+        created_marque.save()
+
+        user = Fabriquant.objects.create_user(email,
+                                                      password=password,
+                                                      nom="Zaidi",
+                                                      prenom="Hamza",
+                                                      adresse="Bouchaoui",
+                                                      tel="023228511",
+                                                      marque=created_marque
+                                                      )
+        user.save()
+
+    def create_admin_fabriquant(self, email, password, marque):
+        created_marque = Marque.objects.create(Id_Marque=marque, Nom_Marque='Renault')
+        created_marque.save()
+
+        user = Fabriquant.objects.create_superuser(email,
+                                              password=password,
+                                              nom="Zaidi",
+                                              prenom="Hamza",
+                                              adresse="Bouchaoui",
+                                              tel="023228511",
+                                              marque=created_marque
+                                              )
+        user.save()
+
+    def test_admin_authentication(self):
+
+        response = self.authenticate_user('admin@sayara.dz','adminadmin')
+        assert response.status_code == 200
+        access_token = response.data['access_token']
+        user = AccessToken.objects.get(token = access_token).user
+        assert user.is_admin
+        assert user.is_admin_fabriquant == False
+        assert user.is_fabriquant == False
+        assert user.is_automobiliste == False
+
+    def test_admin_fabriquant_authentication(self):
+        self.create_admin_fabriquant('admin@renault.dz','password',1)
+        response = self.authenticate_user('admin@renault.dz', 'password')
+        print(response.data)
+        assert response.status_code == 200
+        access_token = response.data['access_token']
+        user = AccessToken.objects.get(token=access_token).user
+        assert user.is_admin == False
+        assert user.is_admin_fabriquant
+        assert user.is_fabriquant
+        assert user.is_automobiliste == False
+        assert user.marque == 1
+
+

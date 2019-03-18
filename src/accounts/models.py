@@ -81,7 +81,7 @@ class FabriquantManager(UserManager):
 
 
     def create_user(self, email, **kwargs):
-        fabriquant = super().create_user(email)
+        fabriquant = super().create_user(email, password= kwargs['password'])
         fabriquant.is_fabriquant = True
         if 'nom' in kwargs.keys():
             fabriquant.nom = kwargs['nom']
@@ -143,3 +143,4 @@ class AdministratuerManager(UserManager):
 class Administrateur(User):
 
     objects = AdministratuerManager()
+
