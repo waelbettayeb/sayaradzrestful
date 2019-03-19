@@ -46,6 +46,12 @@ class IsUsersOwner(permissions.BasePermission):
             perimssion = int(admin_fabriquan.marque.Id_Marque) == obj
             return perimssion
 
+class CanCreateUsers(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        user = request.user
+        return user.is_admin or user.is_admin_fabriquant
+
 class CanCreateAdminFabriquant(permissions.BasePermission):
 
     def has_permission(self, request, view):

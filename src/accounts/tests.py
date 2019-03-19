@@ -5,7 +5,7 @@ from django.test import TestCase
 from rest_framework.test import APITestCase, APIClient, APIRequestFactory, force_authenticate
 
 from accounts.models import Fabriquant, Administrateur
-from accounts.serializers import FabriquantSerializer
+from accounts.serializers import UtilisateurFabriquantSerializer
 from . import views
 from marque.models import Marque
 from . import urls
@@ -69,7 +69,7 @@ class ListFabriquantTestCases(APITestCase):
         assert response.status_code == 200
         assert len(response.data) == 2
         user1 = Fabriquant.objects.get(email="user1@renault.dz")
-        serializer = FabriquantSerializer(user1)
+        serializer = UtilisateurFabriquantSerializer(user1)
         assert serializer.data in response.data
 
     def test_list_utilisateurs_fabriquant_admin(self):
@@ -158,27 +158,10 @@ class CreateUtilisateurFabriquantTestCases(APITestCase):
             'prenom': "user2",
             'adresse': "Adresse user2",
             'tel': "0265884135",
-            'marque': 1
+            #'marque': 1
         }
         response = client.post('/accounts/fabriquant/utilisateur', data)
         self.assertEqual(str(response.data['detail']), "Authentication credentials were not provided.")
-        assert response.status_code == 403
-
-    def test_fail_create_utilisateur_fabriquant_by_not_owner(self):
-        client = APIClient()
-        user = Fabriquant.objects.get(email="admin@renault.dz")
-        client.force_authenticate(user=user)
-        data = {
-            'email': "user2@renault.dz",
-            'password': "123456235",
-            'nom': "Nom user2",
-            'prenom': "user2",
-            'adresse': "Adresse user2",
-            'tel': "0265884135",
-            'marque': 2
-        }
-        response = client.post('/accounts/fabriquant/utilisateur', data)
-        self.assertEqual(str(response.data['detail']), "You do not have permission to perform this action.")
         assert response.status_code == 403
 
     def test_fail_create_utilisateur_by_non_admin(self):
@@ -192,7 +175,7 @@ class CreateUtilisateurFabriquantTestCases(APITestCase):
             'prenom': "user2",
             'adresse': "Adresse user2",
             'tel': "0265884135",
-            'marque': 1
+            #'marque': 1
         }
         response = client.post('/accounts/fabriquant/utilisateur', data)
         self.assertEqual(str(response.data['detail']), "You do not have permission to perform this action.")
@@ -209,7 +192,7 @@ class CreateUtilisateurFabriquantTestCases(APITestCase):
             'prenom': "user2",
             'adresse': "Adresse user2",
             'tel': "0265884135",
-            'marque': 1
+            #'marque': 1
         }
         try:
             user = Fabriquant.objects.get(email="user2@renault.dz")
@@ -538,7 +521,7 @@ class RetrieveUtilisateursFabriquantTestCases(APITestCase):
         response = self.retrieve_user(admin,'user1@renault.dz')
         assert response.status_code == 200
         expected_user = Fabriquant.objects.get(email='user1@renault.dz')
-        serializer = FabriquantSerializer(expected_user)
+        serializer = UtilisateurFabriquantSerializer(expected_user)
         assert serializer.data == response.data
 
 
@@ -548,7 +531,7 @@ class RetrieveUtilisateursFabriquantTestCases(APITestCase):
         response = self.retrieve_user(admin_fabriquant,'user1@renault.dz')
         assert response.status_code == 200
         expected_user = Fabriquant.objects.get(email='user1@renault.dz')
-        serializer = FabriquantSerializer(expected_user)
+        serializer = UtilisateurFabriquantSerializer(expected_user)
         assert serializer.data == response.data
 
 
@@ -557,7 +540,7 @@ class RetrieveUtilisateursFabriquantTestCases(APITestCase):
         response = self.retrieve_user(user1_renault, 'user1@renault.dz')
         assert response.status_code == 200
         expected_user = Fabriquant.objects.get(email='user1@renault.dz')
-        serializer = FabriquantSerializer(expected_user)
+        serializer = UtilisateurFabriquantSerializer(expected_user)
         assert serializer.data == response.data
 
     def test_fail_retrieve_utilisateur_by_other_marque(self):
@@ -730,7 +713,7 @@ class CreateAdminFabriquantTestCases(APITestCase):
         response = self.create_admin_fabriquant(user,email= email,Id_Marque= Id_Marque)
         assert response.status_code == 201
         created_user = Fabriquant.objects.get(email = email)
-        serializer = FabriquantSerializer(created_user)
+        serializer = UtilisateurFabriquantSerializer(created_user)
         assert serializer.data == response.data
         assert created_user.is_admin_fabriquant
 
@@ -743,7 +726,7 @@ class CreateAdminFabriquantTestCases(APITestCase):
         response = self.create_admin_fabriquant(admin, email, Id_Marque)
         assert response.status_code == 201
         created_user = Fabriquant.objects.get(email=email)
-        serializer = FabriquantSerializer(created_user)
+        serializer = UtilisateurFabriquantSerializer(created_user)
         assert serializer.data == response.data
         assert created_user.is_admin_fabriquant
 
@@ -780,7 +763,9 @@ class WebAuthenticationTestCases(APITestCase):
             'client_secret': app.client_secret
         }
 
-        return data
+        client = APIClient()
+        response = client.post('/accounts/token', data)
+        return response
 
 
 
@@ -828,14 +813,39 @@ class WebAuthenticationTestCases(APITestCase):
 
     def test_admin_fabriquant_authentication(self):
         self.create_admin_fabriquant('admin@renault.dz','password',1)
-        data = self.authenticate_user('admin@renault.dz', 'password')
-        client = APIClient()
-        response = client.post('/accounts/token', data)
+        response = self.authenticate_user('admin@renault.dz', 'password')
+
         assert response.status_code == 200
         access_token = response.data['access_token']
-        header = self.create_authentication_header(access_token)
-        response = client.get('/accounts/fabriquant/utilisateur/admin@renault.dz',
-                              HTTP_AUTHORIZATION = header)
-        print(response.data)
+        user = AccessToken.objects.get(token= access_token).user
+        assert user.is_admin == False
+        assert user.is_admin_fabriquant
+        assert user.is_fabriquant
+        assert user.is_automobiliste == False
+        admin_fabriquant = Fabriquant.objects.get(email = user.email)
+        assert admin_fabriquant.marque.Id_Marque == str(1)
+
+    def test_utilisatuer_fabriquant_authentication(self):
+        self.create_utlisateur_fabriquant('admin@renault.dz', 'password', 1)
+        response = self.authenticate_user('admin@renault.dz', 'password')
+
+        assert response.status_code == 200
+        access_token = response.data['access_token']
+        user = AccessToken.objects.get(token=access_token).user
+        assert user.is_admin == False
+        assert user.is_admin_fabriquant == False
+        assert user.is_fabriquant
+        assert user.is_automobiliste == False
+        admin_fabriquant = Fabriquant.objects.get(email=user.email)
+        assert admin_fabriquant.marque.Id_Marque == str(1)
+
+    def test_fail_get_access_token_for_invalid_credentials(self):
+        response = self.authenticate_user('admin@renault.dz', 'password')
+        assert response.status_code == 400
+        expected_error = {
+                        'error_description' :'Invalid credentials given.',
+                        'error': 'invalid_grant'
+        }
+        self.assertEqual(response.data ,expected_error )
 
 

@@ -19,13 +19,25 @@ class FabriquantView(CreateAPIView):
     """Offre un end point pour créer des utilisatuers fabriquant
         L'utilisatuer doit être authentifé en tant qu'administrateur ou administrateur fabriquant
     """
-    permission_classes = [permissions.IsUsersOwner, IsAuthenticated]
-    serializer_class = serializers.FabriquantSerializer
+    permission_classes = [IsAuthenticated, permissions.CanCreateUsers]
+    serializer_class = serializers.UtilisateurFabriquantSerializer
 
     def post(self, request, *args, **kwargs):
-        self.check_object_permissions(request, int(request.data['marque']))
         return super().post(request, *args, **kwargs)
 
+    def perform_create(self, serializer):
+        if self.request.user.is_admin_fabriquant:
+            admin_fabriquant = Fabriquant.objects.get(email= self.request.user)
+            serializer.save(marque = admin_fabriquant.marque)
+        else:
+            serializer.save()
+
+    def get_serializer_class(self):
+        user = self.request.user
+        if user.is_admin:
+            return serializers.UtilisatuerFabriquantSerializerByAdmin
+        else:
+            return self.serializer_class
 
 class ListUtilisateurFabriquantView(ListAPIView):
 
@@ -34,7 +46,7 @@ class ListUtilisateurFabriquantView(ListAPIView):
         Les administrateur fabriquant peuvent voir leurs prores utilisateurs
         L'administrateur peut voir les utilisateurs de tout les fabriquants
     """
-    serializer_class = serializers.FabriquantSerializer
+    serializer_class = serializers.UtilisateurFabriquantSerializer
     permission_classes = [permissions.IsUsersOwner, IsAuthenticated]
     lookup_field = 'marque'
     def get_queryset(self):
@@ -68,7 +80,7 @@ class RUDUtilisateurFabriquant(RetrieveUpdateDestroyAPIView):
         Modifier les données d'un utilisateur
         Supprimer un utilisateur
     """
-    serializer_class = serializers.FabriquantSerializer
+    serializer_class = serializers.UtilisateurFabriquantSerializer
     permission_classes = (IsAuthenticated, permissions.CanUpdateUtilisateurFabriquant)
     authentication_classes = [OAuth2Authentication, ]
     lookup_field = 'email'

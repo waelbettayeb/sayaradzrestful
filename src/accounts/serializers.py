@@ -17,11 +17,28 @@ class AutomobilisteSerializer(serializers.ModelSerializer):
         fields = ('email')
 
 
-class FabriquantSerializer(serializers.ModelSerializer):
+class UtilisateurFabriquantSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Fabriquant
         fields = ('email','password','nom','prenom','adresse','tel','marque')
         extra_kwargs = {'password' : {'write_only' : True}}
+        read_only_fields = ('marque',)
+
+class AdminFabriquantSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Fabriquant
+        fields = ('email','password','nom','prenom','adresse','tel','marque')
+        extra_kwargs = {'password' : {'write_only' : True}}
+
+    def create(self, validated_data):
+        return Fabriquant.objects.create_superuser(**validated_data)
+
+class UtilisatuerFabriquantSerializerByAdmin(AdminFabriquantSerializer):
+
+    def create(self, validated_data):
+        return Fabriquant.objects.create_user(**validated_data)
+
 
 class UpdateFabriquantSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,20 +54,6 @@ class ActiveFabriquantSerilizer(serializers.ModelSerializer):
         fields = ('email', 'password', 'nom', 'prenom', 'adresse', 'tel', 'is_active')
         extra_kwargs = {'password': {'write_only': True}}
 
-
-
-
-class AdminFabriquantSerializer(FabriquantSerializer):
-
-    def create(self, validated_data):
-        return Fabriquant.objects.create_superuser(**validated_data)
-
-
-# class UtilisateurFabrquantSerailizer(serializers.ModelSerializer):
-#     class Meta:
-#         model = models.UtilisateurFabriquant
-#         fields = ('email','password','nom','prenom','tel','Fabriquant')
-#         extra_kwargs = {'password' : {'write_only' : True}}
 
 class AdministratuerSerializer(serializers.ModelSerializer):
     class Meta:
