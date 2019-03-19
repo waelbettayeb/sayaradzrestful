@@ -20,6 +20,7 @@ class FabriquantView(CreateAPIView):
         L'utilisatuer doit être authentifé en tant qu'administrateur ou administrateur fabriquant
     """
     permission_classes = [IsAuthenticated, permissions.CanCreateUsers]
+    authentication_classes = [OAuth2Authentication, ]
     serializer_class = serializers.UtilisateurFabriquantSerializer
 
     def post(self, request, *args, **kwargs):
@@ -48,6 +49,7 @@ class ListUtilisateurFabriquantView(ListAPIView):
     """
     serializer_class = serializers.UtilisateurFabriquantSerializer
     permission_classes = [permissions.IsUsersOwner, IsAuthenticated]
+    authentication_classes = [OAuth2Authentication, ]
     lookup_field = 'marque'
     def get_queryset(self):
         id_marque = self.kwargs['Id_Marque']
@@ -67,6 +69,7 @@ class AdminFabriquantCreation(CreateAPIView):
     """
     serializer_class = serializers.AdminFabriquantSerializer
     permission_classes = [permissions.CanCreateAdminFabriquant,  ]
+    authentication_classes = [OAuth2Authentication, ]
 
     def post(self, request, *args, **kwargs):
         self.check_object_permissions(request,request)
