@@ -24,6 +24,9 @@ class UtilisateurFabriquantSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password' : {'write_only' : True}}
         read_only_fields = ('marque',)
 
+    def create(self, validated_data):
+        return Fabriquant.objects.create_user(**validated_data)
+
 class AdminFabriquantSerializer(serializers.ModelSerializer):
 
     class Meta:

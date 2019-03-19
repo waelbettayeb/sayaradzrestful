@@ -54,7 +54,7 @@ def create_utlisateur_fabriquant(email, password,nom,prenom,adresse,tel ,marque)
 def create_admin_fabriquant(email, password, nom, prenom, adresse, tel, id_marque, nom_marque):
 
     marque = create_marque(id_marque,nom_marque)
-    user = accounts.Fabriquant.objects.create_user(email,
+    user = accounts.Fabriquant.objects.create_superuser(email,
                                                    password=password,
                                                    nom=nom,
                                                    prenom=prenom,
@@ -247,4 +247,143 @@ class AdminstrateurTestCase(APITestCase):
 
 
 
+class AdminstrateurFabriquantTestCase(APITestCase):
+    def setUp(self):
+        admin = accounts.Administrateur.objects.create_superuser(email = 'admin@sayara.dz', password = 'adminadmin')
+        admin.save()
 
+        admin_renault = create_admin_fabriquant(
+            email='admin@renault.dz',
+            password='password',
+            nom= 'Admin',
+            prenom='Renault',
+            adresse='Cheraga',
+            tel='023228511',
+            id_marque=1,
+            nom_marque='Renault'
+        )
+        create_utlisateur_fabriquant(
+            email='user1@renault.dz',
+            password='password',
+            nom='User',
+            prenom='Fabriquant',
+            adresse='Cheraga',
+            tel='023228511',
+            marque= admin_renault.marque
+        )
+
+        admin_peugeot = create_admin_fabriquant(
+            email='admin@peugeot.dz',
+            password='password',
+            nom='Admin',
+            prenom='Peugeot',
+            adresse='Cheraga',
+            tel='023228511',
+            id_marque=2,
+            nom_marque='Peugeot'
+        )
+        create_utlisateur_fabriquant(
+            email='user1@peugeot.dz',
+            password='password',
+            nom='User',
+            prenom='Fabriquant',
+            adresse='Cheraga',
+            tel='023228511',
+            marque=admin_peugeot.marque
+        )
+
+
+    def test_admin_fabriquant_operations(self):
+        app = create_oauth_application()
+        authentication_response = get_authentication_response('admin@renault.dz','password',app)
+        assert authentication_response.status_code == 200
+
+        admin_renault = authenticate_client(authentication_response)
+        assert admin_renault != None
+
+        response = create_user(
+            admin_renault,
+            email='user3@renault.dz',
+            password='password',
+            nom='User3',
+            prenom='User3',
+            tel='023228511',
+            adresse='Bab El Oued',
+        )
+
+        assert response.status_code == 201
+
+        # The created user should be able to login
+        authentication_response = get_authentication_response('user3@renault.dz', 'password', app)
+        assert authentication_response.status_code == 200
+
+        # The created user should be able to see his own profile
+
+        created_user_client = authenticate_client(authentication_response)
+        response = retrieve_user(created_user_client, 'user3@renault.dz')
+        assert response.status_code == 200
+
+        response = list_all_users_request(admin_renault, 1)
+        assert response.status_code == 200
+
+        response = retrieve_user(admin_renault, 'user1@renault.dz')
+        assert response.status_code == 200
+
+        response = delete_user(admin_renault, 'user1@renault.dz')
+        assert response.status_code == 204
+
+        response = retrieve_user(admin_renault, 'user1@renault.dz')
+        assert response.status_code == 404
+
+        new_data = {
+            'tel' : '0561725710'
+        }
+
+        response = update_user(admin_renault,'user3@renault.dz',new_data)
+        assert response.status_code == 200
+
+
+
+class UtilisateurFabriquantTestCase(APITestCase):
+    def setUp(self):
+        admin = accounts.Administrateur.objects.create_superuser(email = 'admin@sayara.dz', password = 'adminadmin')
+        admin.save()
+
+        admin_renault = create_admin_fabriquant(
+            email='admin@renault.dz',
+            password='password',
+            nom= 'Admin',
+            prenom='Renault',
+            adresse='Cheraga',
+            tel='023228511',
+            id_marque=1,
+            nom_marque='Renault'
+        )
+        create_utlisateur_fabriquant(
+            email='user1@renault.dz',
+            password='password',
+            nom='User',
+            prenom='Fabriquant',
+            adresse='Cheraga',
+            tel='023228511',
+            marque= admin_renault.marque
+        )
+
+    def test_admin_fabriquant_operations(self):
+        app = create_oauth_application()
+        authentication_response = get_authentication_response('user1@renault.dz','password',app)
+        assert authentication_response.status_code == 200
+
+        user_renault = authenticate_client(authentication_response)
+        assert user_renault != None
+
+
+        response = retrieve_user(user_renault, 'user1@renault.dz')
+        assert response.status_code == 200
+
+        new_data = {
+            'tel' : '0561725710'
+        }
+
+        response = update_user(user_renault,'user1@renault.dz',new_data)
+        assert response.status_code == 200
