@@ -1,11 +1,14 @@
-from rest_framework.generics import ListAPIView
-from rest_framework.parsers import FileUploadParser
+from django.shortcuts import render
+
+from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from rest_framework.response import Response
+from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 
 from tarif.models import Tarif_Version, Tarif_Option, Tarif_Couleur
-from tarif.serializers import Tarif_Version_Sereializer,Tarif_Option_Sereializer,Tarif_Couleur_Sereializer
-
+from tarif.serializers import Tarif_Version_Sereializer, Tarif_Option_Sereializer, Tarif_Couleur_Sereializer
 from tarif.tarif_management.Tarif_Builder import Tarif_Builder
 # Create your views here.
 
@@ -36,13 +39,24 @@ class Tarif_Couleur_List(ListAPIView):
 
 #     =====================================================================================
 
-class File_Up_load(APIView):
-    parser_classes = (FileUploadParser,)
 
-    def put(self, request, filename, format=None):
-        file_obj = request.FILES['file']
+class test(APIView):
 
-        if (Tarif_Builder.Tarif_Handle(file_obj)):
+    def post(self, request):
+        # form = DocumentForm(request.POST, request.FILES)
+        # if form.is_valid():
+            # newdoc = Document(docfile = request.FILES['docfile'])
+        newdoc = request.FILES['filename']
+        tarif_builder = Tarif_Builder()
+        if (tarif_builder.Tarif_Handle(newdoc)):
             return Response(status=201)
 
         return Response(status=204)
+    def get (self,request):
+        return render(request, 'list.html', {'documents': '', 'form': ''})
+        # form = DocumentForm()  # A empty, unbound form
+
+        # Load documents for the list page
+        # documents = Document.objects.all()
+
+        # Render list page with the documents and the form
