@@ -2,11 +2,10 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import generics
-from rest_framework.generics import ListAPIView, get_object_or_404
+from rest_framework.generics import ListAPIView
 
 from couleur.models import Couleur
 from couleur.serializers import Couleur_Sereializer
-from modele.models import Modele
 
 
 class All_Couleur(ListAPIView):

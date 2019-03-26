@@ -1,8 +1,5 @@
 from django.shortcuts import render
 
-from django.template import RequestContext
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from rest_framework.response import Response
 from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
@@ -54,9 +51,3 @@ class test(APIView):
         return Response(status=204)
     def get (self,request):
         return render(request, 'list.html', {'documents': '', 'form': ''})
-        # form = DocumentForm()  # A empty, unbound form
-
-        # Load documents for the list page
-        # documents = Document.objects.all()
-
-        # Render list page with the documents and the form

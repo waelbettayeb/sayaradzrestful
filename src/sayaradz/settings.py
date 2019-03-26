@@ -29,8 +29,10 @@ ALLOWED_HOSTS = [
     '192.168.43.106',
     '127.0.0.1',
     '0.0.0.0',
+    'localhost',
     'sayara.dz',
-    'raouf'
+    'raouf',
+    '74730854.ngrok.io'
 ]
 
 
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
     'option',
     'couleur',
     'tarif',
+    'reservation',
     #accounts handling
     'accounts',
     #social authentication

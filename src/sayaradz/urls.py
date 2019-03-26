@@ -18,6 +18,7 @@ urlpatterns = [
     path('option/', include('option.urls')),
     path('couleur/', include('couleur.urls')),
     path('tarif/', include('tarif.urls')),
+    path('reservation/', include('reservation.urls')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT,})
 
 ]
