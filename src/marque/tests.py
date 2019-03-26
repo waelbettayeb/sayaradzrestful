@@ -5,7 +5,7 @@ from rest_framework.test import APITestCase, APIClient
 from rest_framework.utils import json
 
 from marque.models import Marque
-from marque.serializers import MarqueSereializer
+from marque.serializers import Marque_Sereializer
 from modele.models import Modele
 from version.models import Version
 
@@ -23,7 +23,7 @@ class MarquesAPITestCases(APITestCase):
         client = APIClient()
         response = client.get('/marque/', format = 'json')
         marques = Marque.objects.all()
-        serializer = MarqueSereializer(marques, many=True)
+        serializer = Marque_Sereializer(marques, many=True)
         assert response.status_code == 200
         assert len(response.data) == 1
         self.assertEqual(serializer.data, response.data)

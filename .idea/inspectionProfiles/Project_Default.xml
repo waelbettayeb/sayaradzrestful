@@ -1,0 +1,16 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="src.sayaradz.urls.system_api" />
+          <option value="src.system_api.views.system_api" />
+          <option value="src.system_api.sereializers.system_api" />
+          <option value="src.system_api.tests.models" />
+          <option value="option.views.khra_sereializer" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

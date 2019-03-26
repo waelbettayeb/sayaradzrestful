@@ -1,0 +1,23 @@
+def list(request):
+    # Handle file upload
+    if request.method == 'POST':
+        # form = DocumentForm(request.POST, request.FILES)
+        # if form.is_valid():
+        #     # newdoc = Document(docfile = request.FILES['docfile'])
+        #     newdoc = request.FILES['docfile']
+        #     print("-------------------------------------------------------------",newdoc)
+        #     for row in newdoc:
+        #         print(row)
+        #     # Redirect to the document list after POST
+        #     # return HttpResponseRedirect(list(None))
+        #     return render(request, 'list.html', {'documents': '', 'form': form})
+        return HttpResponseRedirect(test.post(request))
+    else:
+        form = DocumentForm() # A empty, unbound form
+
+    # Load documents for the list page
+    documents = Document.objects.all()
+
+
+    # Render list page with the documents and the form
+    return render(request, 'list.html', {'documents': documents, 'form': form})
