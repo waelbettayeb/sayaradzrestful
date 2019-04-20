@@ -18,5 +18,4 @@ class CsvFileValidityChecker(FileValidityChecker):
         if not 'code_version' in file.fieldnames:
             errors.append('Le fichier doit contenir le code de version')
 
-
         return errors
