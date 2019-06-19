@@ -24,7 +24,7 @@ class Vehicule(models.Model):
     Concessionnaire = models.CharField(max_length = 50, default ="")
     Code_Version = models.ForeignKey(Version, on_delete = models.CASCADE)
     Code_Couleur = models.ForeignKey(Couleur, on_delete = models.CASCADE)
-    Liste_Option = models.ManyToManyField(Option, through = 'List_option',through_fields=('vehicule', 'option'))
+    Liste_Option = models.ManyToManyField(Option, through = 'List_Option',through_fields=('vehicule', 'option'))
     Reservation = models.ManyToManyField(Automobiliste, through = 'Commande',through_fields=('vehicule', 'automobiliste'))
 
     def get_marque(self):

@@ -9,7 +9,7 @@ class CsvFileReader(FileReader):
     def __init__(self, **kwargs):
         self.file_validator = CsvFileValidityChecker()
         self.delimiter = ','
-        if kwargs['delimiter']:
+        if 'delimiter' in kwargs.keys():
             self.delimiter = kwargs['delimiter']
 
     def __get_options(self, row):
@@ -17,7 +17,8 @@ class CsvFileReader(FileReader):
         options = []
         for i in indexes:
             index = 'option_{}'.format(i)
-            options.append(row[index])
+            if (row[index] != ""):
+             options.append(row[index])
 
         return options
 

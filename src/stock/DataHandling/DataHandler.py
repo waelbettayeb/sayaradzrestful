@@ -1,6 +1,6 @@
 from couleur.models import Couleur
 from option.models import Option
-from reservation.models import Vehicule
+from reservation.models import Vehicule, List_Option
 from stock.DataHandling.FileReaderFactory import FileReaderFactory
 from version.models import Version
 
@@ -13,7 +13,6 @@ class DataHandler():
         file_content = self.__read_file(file_path, **kwargs)
         if file_content['clean']:
             data = file_content['data']
-            clean = True
             for vehicul in data :
 
                 code_couleur = vehicul['code_couleur']
@@ -26,10 +25,13 @@ class DataHandler():
                     vehicule = Vehicule(
                         Numero_Chassis= vehicul['numero_chassis'],
                         Concessionnaire= vehicul['concessionaire'],
-                        Code_Version= vehicul['code_version'],
-                        Code_Couleur= vehicul['code_couleur'])
-                    vehicule.list_option_set.add(vehicul['options'])
-                    vehicul.save()
+                        Code_Version_id= vehicul['code_version'],
+                        Code_Couleur_id= vehicul['code_couleur'])
+                    vehicule.save()
+                    for option in vehicul['options']:
+                        option_obj = List_Option.objects.create(option = Option.objects.get(Code_Option=option), vehicule = vehicule)
+                        option_obj.save()
+                    vehicule.save()
                 else :
                     error['numero_chassis'] = vehicul['numero_chassis']
                     if not color_exists :
