@@ -88,3 +88,10 @@ class ReadingDataTestCase(TestCase):
 
         vehicule = Vehicule.objects.get(Numero_Chassis='ASQDQF')
         assert len(vehicule.Liste_Option.all()) == 2
+
+    def test_invalid_data_insertion(self):
+        data_handler = DataHandler()
+        errors = data_handler.handle_data('invalid_data_test.csv')
+        assert errors
+        assert len(errors) == 1
+

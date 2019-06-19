@@ -20,7 +20,6 @@ class DataHandler():
                 options = vehicul['options']
                 error = {}
                 color_exists, option_exists, version_exists = self.__check_existance(code_couleur,options, code_version)
-
                 if color_exists and option_exists and version_exists :
                     vehicule = Vehicule(
                         Numero_Chassis= vehicul['numero_chassis'],
@@ -44,15 +43,19 @@ class DataHandler():
                             if not Option.objects.filter(Code_Option=option):
                                 error['option'].append(option)
                     errors.append(error)
+        else:
+            errors = file_content['errors']
         return errors
 
 
 
 
     def __check_existance(self,Code_Couleur, options, Code_Version):
-
+        option_exists = True
         color_exists = Couleur.objects.filter(Code_Couleur= Code_Couleur).exists()
-        option_exists = Option.objects.filter(Code_Option__in= options).exists()
+        for option in options :
+            if  not Option.objects.filter(Code_Option= option).exists():
+                option_exists = False
         version_exists = Version.objects.filter(Code_Version = Code_Version).exists()
 
         return color_exists,option_exists,version_exists
