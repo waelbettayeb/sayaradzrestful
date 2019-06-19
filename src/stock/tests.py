@@ -77,4 +77,5 @@ class TestStockFileUpload(APITestCase):
             }
 
             response = client.post(path='/stock/upload' , data= data)
+            print(response.data)
             assert Vehicule.objects.filter(Numero_Chassis='FAS131').exists()

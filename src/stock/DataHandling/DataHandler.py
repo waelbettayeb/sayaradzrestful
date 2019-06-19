@@ -9,10 +9,11 @@ class DataHandler():
 
     def handle_data(self,file_path ,**kwargs):
 
-        errors = []
+        errors = None
         file_content = self.__read_file(file_path, **kwargs)
         if file_content['clean']:
             data = file_content['data']
+            errors_details = []
             for vehicul in data :
 
                 code_couleur = vehicul['code_couleur']
@@ -42,9 +43,16 @@ class DataHandler():
                         for option in options :
                             if not Option.objects.filter(Code_Option=option):
                                 error['option'].append(option)
-                    errors.append(error)
+                    errors_details.append(error)
+
+            if len(errors_details) != 0:
+                errors = {}
+                errors['type'] = "invalid data. some values don't exist in the data base"
+                errors['details'] = errors_details
         else:
-            errors = file_content['errors']
+            errors = {}
+            errors['type'] = 'file format is not valid.'
+            errors['details'] = file_content['errors']
         return errors
 
 
