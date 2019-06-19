@@ -1,13 +1,16 @@
 from stock.DataHandling.CSVFileValidityChecker import CsvFileValidityChecker
 from stock.DataHandling.FileReader import FileReader
 import csv
+import os
 
 
 class CsvFileReader(FileReader):
 
-    def __init__(self, delimiter):
+    def __init__(self, **kwargs):
         self.file_validator = CsvFileValidityChecker()
-        self.delimiter = delimiter
+        self.delimiter = ','
+        if kwargs['delimiter']:
+            self.delimiter = kwargs['delimiter']
 
     def __get_options(self, row):
         indexes = range(len(row) - 4)
@@ -19,11 +22,14 @@ class CsvFileReader(FileReader):
         return options
 
     def get_file_data(self, file_path):
+        module_dir = os.path.dirname(__file__)  # get current directory
+        file_path = os.path.join(module_dir, file_path)
+
         data = []
         response = {}
         response['clean'] = True
         with open(file_path) as stock_file:
-            csv_reader = csv.reader(stock_file,delimiter = self.delimiter)
+            csv_reader = csv.DictReader(stock_file,delimiter = self.delimiter)
             errors = self.file_validator.check_validity(csv_reader)
             if len(errors) != 0:
                 response['clean'] = False

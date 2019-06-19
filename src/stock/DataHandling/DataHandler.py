@@ -1,0 +1,64 @@
+from couleur.models import Couleur
+from option.models import Option
+from reservation.models import Vehicule
+from stock.DataHandling.FileReaderFactory import FileReaderFactory
+from version.models import Version
+
+
+class DataHandler():
+
+    def handle_data(self,file_path ,**kwargs):
+
+        errors = []
+        file_content = self.__read_file(file_path, **kwargs)
+        if file_content['clean']:
+            data = file_content['data']
+            clean = True
+            for vehicul in data :
+
+                code_couleur = vehicul['code_couleur']
+                code_version = vehicul['code_version']
+                options = vehicul['options']
+                error = {}
+                color_exists, option_exists, version_exists = self.__check_existance(code_couleur,options, code_version)
+
+                if color_exists and option_exists and version_exists :
+                    vehicule = Vehicule(
+                        Numero_Chassis= vehicul['numero_chassis'],
+                        Concessionnaire= vehicul['concessionaire'],
+                        Code_Version= vehicul['code_version'],
+                        Code_Couleur= vehicul['code_couleur'])
+                    vehicule.list_option_set.add(vehicul['options'])
+                    vehicul.save()
+                else :
+                    error['numero_chassis'] = vehicul['numero_chassis']
+                    if not color_exists :
+                        error['code_couleur'] = vehicul['code_couleur']
+                    if not code_version :
+                        error['code_version'] = vehicul['code_version']
+                    if not option_exists :
+                        error['option'] = []
+                        for option in options :
+                            if not Option.objects.filter(Code_Option=option):
+                                error['option'].append(option)
+                    errors.append(error)
+        return errors
+
+
+
+
+    def __check_existance(self,Code_Couleur, options, Code_Version):
+
+        color_exists = Couleur.objects.filter(Code_Couleur= Code_Couleur).exists()
+        option_exists = Option.objects.filter(Code_Option__in= options).exists()
+        version_exists = Version.objects.filter(Code_Version = Code_Version).exists()
+
+        return color_exists,option_exists,version_exists
+
+        pass
+
+    def __read_file(self, file_path, **kwargs):
+        file_reader_factory = FileReaderFactory()
+        file_reader = file_reader_factory.create_file_reader(**kwargs)
+        file_content = file_reader.get_file_data(file_path)
+        return file_content
