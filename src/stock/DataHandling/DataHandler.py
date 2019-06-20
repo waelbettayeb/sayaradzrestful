@@ -10,6 +10,7 @@ class DataHandler():
     def handle_data(self,file_path ,**kwargs):
 
         errors = None
+        status = 200
         file_content = self.__read_file(file_path, **kwargs)
         if file_content['clean']:
             data = file_content['data']
@@ -46,14 +47,16 @@ class DataHandler():
                     errors_details.append(error)
 
             if len(errors_details) != 0:
+                status = 206
                 errors = {}
                 errors['type'] = "invalid data. some values don't exist in the data base"
                 errors['details'] = errors_details
         else:
+            status = 406
             errors = {}
             errors['type'] = 'file format is not valid.'
             errors['details'] = file_content['errors']
-        return errors
+        return errors, status
 
 
 

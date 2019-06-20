@@ -11,6 +11,7 @@ from modele.models import Modele
 from option.models import Option
 from reservation.models import Vehicule
 from version.models import Version
+from accounts.models import Fabriquant
 
 
 class TestStockFileUpload(APITestCase):
@@ -32,6 +33,16 @@ class TestStockFileUpload(APITestCase):
         self.insert_option(321842)
         self.insert_option(654321)
         self.insert_option(654218)
+
+        admin_renault = Fabriquant.objects.create_superuser("admin@renault.dz",
+                                                            password="testpassword",
+                                                            nom="Zaidi",
+                                                            prenom="Hamza",
+                                                            adresse="Bouchaoui",
+                                                            tel="023228511",
+                                                            marque=renault
+                                                            )
+
 
         pass
 
@@ -71,7 +82,7 @@ class TestStockFileUpload(APITestCase):
         with open(file_path) as stock_file:
 
             client = APIClient()
-
+            client.force_authenticate(user= Fabriquant.objects.get(email= 'admin@renault.dz'))
             data = {
                 'file' :stock_file
             }
