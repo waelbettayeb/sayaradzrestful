@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'modele',
     'version',
     'option',
+    'CompositionVehicule',
     'couleur',
     'tarif',
     'reservation',
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     #social authentication
     'oauth2_provider',
     'social_django',
+    'annonce',
     'rest_framework_social_oauth2',
 
 ]
@@ -138,6 +140,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+
 }
 
 
