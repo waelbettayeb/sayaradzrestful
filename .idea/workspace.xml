@@ -2,15 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b35fa2f-9728-4cfc-9cc2-389658252f2d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/annonce/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/annonce/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sayaradz/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sayaradz/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sayaradz/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sayaradz/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/sayaradzrestful$Unittests_for_tests_TestAnnounceMethods_test_Annonce.coverage" NAME="Unittests for tests.TestAnnounceMethods.test_Annonce Coverage Results" MODIFIED="1561131294139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/annonce" />
+    <SUITE FILE_PATH="coverage/sayaradzrestful$Unittests_for_tests_TestAnnounceMethods_test_Post_Request.coverage" NAME="Unittests for tests.TestAnnounceMethods.test_Post_Request Coverage Results" MODIFIED="1561132095184" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/annonce" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -29,27 +33,18 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/CompositionVehicule/serializers.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="131" column="29" lean-forward="true" selection-start-line="131" selection-start-column="29" selection-end-line="131" selection-end-column="29" />
-              <folding>
-                <element signature="e#0#33#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/tarif/tests.py">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/annonce/tests.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/annonce/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1052">
-              <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="9" />
+            <state relative-caret-position="216">
+              <caret line="48" column="12" selection-start-line="46" selection-start-column="6" selection-end-line="48" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,10 +52,70 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/accounts/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+            <state relative-caret-position="296">
+              <caret line="27" column="35" lean-forward="true" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
               <folding>
                 <element signature="e#0#75#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/annonce/tests.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
+              <folding>
+                <element signature="e#1#33#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/couleur/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/modele/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sayaradz/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/conf/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="110">
+              <caret line="41" column="44" lean-forward="true" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/option/tests.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="33" column="42" lean-forward="true" selection-start-line="31" selection-start-column="8" selection-end-line="33" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -69,22 +124,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/annonce/serializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="142" lean-forward="true" selection-start-line="142" selection-end-line="142" />
+            <state relative-caret-position="278">
+              <caret line="119" column="58" lean-forward="true" selection-start-line="117" selection-start-column="14" selection-end-line="119" selection-end-column="58" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/CompositionVehicule/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="89">
-              <caret line="16" column="4" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="11" />
-              <folding>
-                <element signature="e#2#30#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,7 +158,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/marque/models.py" />
-        <option value="$PROJECT_DIR$/src/modele/models.py" />
         <option value="$PROJECT_DIR$/src/modele/serializers.py" />
         <option value="$PROJECT_DIR$/src/marque/serializers.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
@@ -131,7 +173,6 @@
         <option value="$PROJECT_DIR$/src/version/views.py" />
         <option value="$PROJECT_DIR$/src/version/admin.py" />
         <option value="$PROJECT_DIR$/src/version/serializers.py" />
-        <option value="$PROJECT_DIR$/src/couleur/models.py" />
         <option value="$PROJECT_DIR$/src/version/models.py" />
         <option value="$PROJECT_DIR$/src/option/models.py" />
         <option value="$PROJECT_DIR$/src/option/serializers.py" />
@@ -153,11 +194,13 @@
         <option value="$PROJECT_DIR$/src/CompositionVehicule/admin.py" />
         <option value="$PROJECT_DIR$/src/CompositionVehicule/urls.py" />
         <option value="$PROJECT_DIR$/src/CompositionVehicule/models.py" />
-        <option value="$PROJECT_DIR$/src/sayaradz/settings.py" />
         <option value="$PROJECT_DIR$/src/sayaradz/urls.py" />
         <option value="$PROJECT_DIR$/src/CompositionVehicule/views.py" />
-        <option value="$PROJECT_DIR$/src/annonce/serializers.py" />
         <option value="$PROJECT_DIR$/src/CompositionVehicule/serializers.py" />
+        <option value="$PROJECT_DIR$/src/annonce/serializers.py" />
+        <option value="$PROJECT_DIR$/src/sayaradz/settings.py" />
+        <option value="$PROJECT_DIR$/src/modele/models.py" />
+        <option value="$PROJECT_DIR$/src/couleur/models.py" />
         <option value="$PROJECT_DIR$/src/annonce/tests.py" />
       </list>
     </option>
@@ -189,47 +232,15 @@
               <item name="sayaradzrestful" type="b2602c69:ProjectViewProjectNode" />
               <item name="sayaradzrestful" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="accounts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sayaradzrestful" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sayaradzrestful" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="annonce" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sayaradzrestful" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sayaradzrestful" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="CompositionVehicule" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sayaradzrestful" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sayaradzrestful" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="couleur" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sayaradzrestful" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sayaradzrestful" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="reservation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sayaradzrestful" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sayaradzrestful" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="tarif" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sayaradzrestful" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sayaradzrestful" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="version" type="462c0819:PsiDirectoryNode" />
+              <item name="sayaradz" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sayaradzrestful" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="sayaradzrestful" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
           </expand>
           <select />
@@ -254,6 +265,44 @@
       </list>
     </option>
   </component>
+  <component name="RunManager" selected="Python tests.Unittests for tests.TestAnnounceMethods.test_Post_Request">
+    <configuration name="Unittests for tests.TestAnnounceMethods.test_Annonce" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="sayaradzrestful" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/annonce" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.TestAnnounceMethods.test_Annonce&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for tests.TestAnnounceMethods.test_Post_Request" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="sayaradzrestful" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/annonce" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.TestAnnounceMethods.test_Post_Request&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Unittests for tests.TestAnnounceMethods.test_Post_Request" />
+        <item itemvalue="Python tests.Unittests for tests.TestAnnounceMethods.test_Annonce" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -272,12 +321,44 @@
       <workItem from="1554148097270" duration="15521000" />
       <workItem from="1554222064416" duration="2752000" />
       <workItem from="1554224865939" duration="11774000" />
-      <workItem from="1561118705705" duration="6655000" />
+      <workItem from="1561118705705" duration="13379000" />
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Annonce - 2019.06.21 at 16h 29m 59s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Annonce" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Annonce - 2019.06.21 at 16h 30m 50s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Annonce" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Annonce - 2019.06.21 at 16h 31m 03s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Annonce" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Annonce - 2019.06.21 at 16h 33m 22s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Annonce" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Annonce - 2019.06.21 at 16h 33m 32s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Annonce" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Annonce - 2019.06.21 at 16h 34m 55s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Annonce" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Post_Request - 2019.06.21 at 16h 37m 32s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Post_Request" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Post_Request - 2019.06.21 at 16h 43m 58s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Post_Request" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Post_Request - 2019.06.21 at 16h 48m 04s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Post_Request" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_tests_TestAnnounceMethods_test_Post_Request - 2019.06.21 at 16h 48m 16s.xml">
+      <configuration name="Unittests for tests.TestAnnounceMethods.test_Post_Request" configurationId="tests" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="106034000" />
+    <option name="totallyTimeSpent" value="112758000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -289,7 +370,7 @@
       <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="2" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.3285968" />
-      <window_info anchor="bottom" id="Run" order="4" />
+      <window_info anchor="bottom" id="Run" order="4" weight="0.47069272" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
@@ -312,13 +393,13 @@
       <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="2" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.3285968" />
-      <window_info anchor="bottom" id="Run" order="4" />
+      <window_info active="true" anchor="bottom" id="Run" order="4" visible="true" weight="0.47069272" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3285968" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3285968" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -332,29 +413,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/accounts/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/version/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/accounts/views.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/option/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -478,16 +536,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/modele/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tarif/tarif_management/Tarif_Builder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -543,13 +591,6 @@
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sayaradz/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -654,13 +695,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/annonce/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="9" column="29" lean-forward="true" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/couleur/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -681,16 +715,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/annonce/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="142" lean-forward="true" selection-start-line="142" selection-end-line="142" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/CompositionVehicule/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -704,20 +728,81 @@
     <entry file="file://$PROJECT_DIR$/src/tarif/tests.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/annonce/serializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="119" column="58" lean-forward="true" selection-start-line="117" selection-start-column="14" selection-end-line="119" selection-end-column="58" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/django/conf/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="41" column="44" lean-forward="true" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/accounts/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="15" column="20" lean-forward="true" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+        <state relative-caret-position="296">
+          <caret line="27" column="35" lean-forward="true" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
           <folding>
             <element signature="e#0#75#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/annonce/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="48" column="12" selection-start-line="46" selection-start-column="6" selection-end-line="48" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/option/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="33" column="42" lean-forward="true" selection-start-line="31" selection-start-column="8" selection-end-line="33" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/modele/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/couleur/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sayaradz/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/annonce/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1052">
-          <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="9" />
+        <state relative-caret-position="228">
+          <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
+          <folding>
+            <element signature="e#1#33#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
