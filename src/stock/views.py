@@ -18,7 +18,7 @@ from stock.DataHandling.DataHandler import DataHandler
 class UploadStock(APIView):
 
     parser_classes = (MultiPartParser,)
-    #permission_classes = (IsAuthenticated, users_permissions.IsAdminFabriquant)
+    permission_classes = (IsAuthenticated, users_permissions.IsAdminFabriquant)
     authentication_classes = (OAuth2Authentication, )
     def post(self, request):
         serializer = serializers.StockFileSerializer(data = request.FILES)
