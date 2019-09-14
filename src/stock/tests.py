@@ -82,7 +82,6 @@ class TestStockFileUpload(APITestCase):
         module_dir = os.path.dirname(__file__)  # get current directory
         file_path = os.path.join(module_dir, 'DataHandling/test.csv')
         with io.open(file_path,encoding='utf-8') as stock_file:
-            print(stock_file.encoding)
             client = APIClient()
             client.force_authenticate(user= Fabriquant.objects.get(email= 'admin@renault.dz'))
             data = {
@@ -90,5 +89,4 @@ class TestStockFileUpload(APITestCase):
             }
 
             response = client.post(path='/stock/upload' , data= data)
-            print(response.data)
             assert Vehicule.objects.filter(Numero_Chassis='FAS131').exists()

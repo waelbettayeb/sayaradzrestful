@@ -67,7 +67,6 @@ class ReadingDataTestCase(TestCase):
         module_dir = os.path.dirname(__file__)  # get current directory
         file_path = os.path.join(module_dir, 'test.csv')
         with open(file_path) as stock_file:
-            print(stock_file.encoding)
             data = file_reader.get_file_data(stock_file)
             assert data['clean']
             assert len(data['data']) == 2
