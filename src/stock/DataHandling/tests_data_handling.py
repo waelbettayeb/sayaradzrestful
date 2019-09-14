@@ -1,3 +1,5 @@
+import os
+
 from django.test import TestCase
 
 from couleur.models import Couleur
@@ -61,37 +63,50 @@ class ReadingDataTestCase(TestCase):
 
 
     def test_valid_csv_file_reading(self):
-        file_reader = CsvFileReader(delimiter=',')
-        data = file_reader.get_file_data('test.csv')
-        assert data['clean']
-        assert len(data['data']) == 2
-
+        file_reader = CsvFileReader(delimiter =',')
+        module_dir = os.path.dirname(__file__)  # get current directory
+        file_path = os.path.join(module_dir, 'test.csv')
+        with open(file_path) as stock_file:
+            print(stock_file.encoding)
+            data = file_reader.get_file_data(stock_file)
+            assert data['clean']
+            assert len(data['data']) == 2
         pass
+
 
     def test_invalid_csv_file_reading(self):
         file_reader = CsvFileReader(delimiter=',')
-        data = file_reader.get_file_data('invalid_test.csv')
-        assert not data['clean']
-        assert len(data['errors']) == 1
+        module_dir = os.path.dirname(__file__)  # get current directory
+        file_path = os.path.join(module_dir, 'invalid_test.csv')
+        with open(file_path) as stock_file:
+            data = file_reader.get_file_data(stock_file)
+            assert not data['clean']
+            assert len(data['errors']) == 1
         pass
 
     def test_data_insertion(self):
 
         data_handler = DataHandler()
-        data_handler.handle_data('test.csv')
+        module_dir = os.path.dirname(__file__)  # get current directory
+        file_path = os.path.join(module_dir, 'test.csv')
+        with open(file_path) as stock_file:
+            data_handler.handle_data(stock_file)
+            assert Vehicule.objects.filter(Numero_Chassis='FAS131').exists()
+            assert Vehicule.objects.filter(Numero_Chassis='ASQDQF').exists()
 
-        assert Vehicule.objects.filter(Numero_Chassis='FAS131').exists()
-        assert Vehicule.objects.filter(Numero_Chassis='ASQDQF').exists()
+            vehicule = Vehicule.objects.get(Numero_Chassis='FAS131')
+            assert len(vehicule.Liste_Option.all()) == 3
 
-        vehicule = Vehicule.objects.get(Numero_Chassis='FAS131')
-        assert len(vehicule.Liste_Option.all()) == 3
-
-        vehicule = Vehicule.objects.get(Numero_Chassis='ASQDQF')
-        assert len(vehicule.Liste_Option.all()) == 2
+            vehicule = Vehicule.objects.get(Numero_Chassis='ASQDQF')
+            assert len(vehicule.Liste_Option.all()) == 2
+    pass
 
     def test_invalid_data_insertion(self):
         data_handler = DataHandler()
-        errors = data_handler.handle_data('invalid_data_test.csv')
-        assert errors
-        assert len(errors) == 1
+        module_dir = os.path.dirname(__file__)  # get current directory
+        file_path = os.path.join(module_dir, 'invalid_data_test.csv')
+        with open(file_path) as stock_file:
+            errors,status = data_handler.handle_data(stock_file)
+            assert errors
+            assert len(errors['details']) == 1
 

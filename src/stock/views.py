@@ -1,3 +1,5 @@
+from io import TextIOWrapper
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -16,14 +18,15 @@ from stock.DataHandling.DataHandler import DataHandler
 class UploadStock(APIView):
 
     parser_classes = (MultiPartParser,)
-    permission_classes = (IsAuthenticated, users_permissions.IsAdminFabriquant)
+    #permission_classes = (IsAuthenticated, users_permissions.IsAdminFabriquant)
     authentication_classes = (OAuth2Authentication, )
     def post(self, request):
         serializer = serializers.StockFileSerializer(data = request.FILES)
         if serializer.is_valid():
             data_handler = DataHandler()
             response = {}
-            errors, status_code = data_handler.handle_data(request.FILES['file'])
+            file = TextIOWrapper(request.FILES['file'], encoding = request.encoding)
+            errors, status_code = data_handler.handle_data(file)
             if not errors:
                 response['success'] = True
                 response['message'] = 'All the vehiculs have been successfully inserted'

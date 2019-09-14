@@ -1,3 +1,5 @@
+import io
+
 import codecs
 
 from stock.DataHandling.CSVFileValidityChecker import CsvFileValidityChecker
@@ -24,13 +26,13 @@ class CsvFileReader(FileReader):
 
         return options
 
-    def get_file_data(self, file_path):
+    def get_file_data(self, file):
 
         data = []
         response = {}
         response['clean'] = True
-
-        csv_reader = csv.DictReader(codecs.iterdecode(file_path, 'utf-8'))
+       # csv_reader = csv.DictReader(codecs.iterdecode(file_path, 'utf-8'))
+        csv_reader = csv.DictReader(file)
         errors = self.file_validator.check_validity(csv_reader)
         if len(errors) != 0:
             response['clean'] = False
