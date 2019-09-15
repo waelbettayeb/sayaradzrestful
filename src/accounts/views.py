@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from accounts.models import Fabriquant
 from . import serializers
@@ -94,3 +95,29 @@ class RUDUtilisateurFabriquant(RetrieveUpdateDestroyAPIView):
         if self.request.method == 'PATCH':
             return serializers.ActiveFabriquantSerilizer
         return self.serializer_class
+
+class UserType(APIView) :
+
+    permission_classes = (IsAuthenticated, permissions.CanSeeType,  )
+    authentication_classes = (OAuth2Authentication, )
+    def get(self, request):
+        user = request.user
+        response = {}
+        status = 200
+        if user.is_admin :
+            response['type'] = 'Administrateur'
+        elif user.is_admin_fabriquant:
+            response['type'] = 'Administrateur Fabriquant'
+            fabriquant = Fabriquant.objects.get(email=user.email)
+            response['id_marque'] = fabriquant.marque.Id_Marque
+            response['marque'] = fabriquant.marque.Nom_Marque
+        elif user.is_fabriquant :
+            response['type'] = 'Utilisateur Fabriquant'
+            fabriquant = Fabriquant.objects.get(email=user.email)
+            response['id_marque'] = fabriquant.marque.Id_Marque
+            response['marque'] = fabriquant.marque.Nom_Marque
+        else:
+            response['error'] = 'Bad Request'
+            status = 400
+
+        return Response(data= response, status = status)
