@@ -856,7 +856,7 @@ class WebAuthenticationTestCases(APITestCase):
         print(response.data)
 
     def test_fail_get_access_token_for_invalid_credentials(self):
-        response = self.authenticate_user('admin@renault.dz', 'password')
+        response, client = self.authenticate_user('admin@renault.dz', 'password')
         assert response.status_code == 400
         expected_error = {
                         'error_description' :'Invalid credentials given.',

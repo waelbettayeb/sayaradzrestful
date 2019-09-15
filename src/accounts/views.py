@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+import marque
 from accounts.models import Fabriquant
 from . import serializers
 from . import models
@@ -109,13 +110,19 @@ class UserType(APIView) :
         elif user.is_admin_fabriquant:
             response['type'] = 'Administrateur Fabriquant'
             fabriquant = Fabriquant.objects.get(email=user.email)
-            response['id_marque'] = fabriquant.marque.Id_Marque
-            response['marque'] = fabriquant.marque.Nom_Marque
+            user_serializer = serializers.AdminFabriquantSerializer(fabriquant)
+            response['user'] = user_serializer.data
+            fabriquant_marque = marque.models.Marque.objects.get(Id_Marque = fabriquant.marque.Id_Marque)
+            marque_serializer = marque.serializers.Marque_Sereializer(fabriquant_marque)
+            response['marque'] = marque_serializer.data
         elif user.is_fabriquant :
             response['type'] = 'Utilisateur Fabriquant'
             fabriquant = Fabriquant.objects.get(email=user.email)
-            response['id_marque'] = fabriquant.marque.Id_Marque
-            response['marque'] = fabriquant.marque.Nom_Marque
+            serializer = serializers.UtilisateurFabriquantSerializer(fabriquant)
+            response['user'] = serializer.data
+            fabriquant_marque = marque.models.Marque.objects.get(Id_Marque=fabriquant.marque.Id_Marque)
+            marque_serializer = marque.serializers.Marque_Sereializer(fabriquant_marque)
+            response['marque'] = marque_serializer.data
         else:
             response['error'] = 'Bad Request'
             status = 400
