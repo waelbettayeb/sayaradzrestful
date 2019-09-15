@@ -5,7 +5,7 @@ from django.test import TestCase
 from rest_framework.test import APITestCase, APIClient, APIRequestFactory, force_authenticate
 
 from accounts.models import Fabriquant, Administrateur, User
-from accounts.serializers import UtilisateurFabriquantSerializer
+from accounts.serializers import UtilisateurFabriquantSerializer, ActiveFabriquantSerilizer
 from . import views
 from marque.models import Marque
 from . import urls
@@ -69,8 +69,9 @@ class ListFabriquantTestCases(APITestCase):
         assert response.status_code == 200
         assert len(response.data) == 2
         user1 = Fabriquant.objects.get(email="user1@renault.dz")
-        serializer = UtilisateurFabriquantSerializer(user1)
+        serializer = ActiveFabriquantSerilizer(user1)
         assert serializer.data in response.data
+        print(response.data)
 
     def test_list_utilisateurs_fabriquant_admin(self):
         admin = Administrateur.objects.create_superuser(
@@ -526,7 +527,7 @@ class RetrieveUtilisateursFabriquantTestCases(APITestCase):
 
         assert response.status_code == 200
         expected_user = Fabriquant.objects.get(email='user1@renault.dz')
-        serializer = UtilisateurFabriquantSerializer(expected_user)
+        serializer = ActiveFabriquantSerilizer(expected_user)
         assert serializer.data == response.data
 
 
@@ -536,7 +537,7 @@ class RetrieveUtilisateursFabriquantTestCases(APITestCase):
         response = self.retrieve_user(admin_fabriquant,'user1@renault.dz')
         assert response.status_code == 200
         expected_user = Fabriquant.objects.get(email='user1@renault.dz')
-        serializer = UtilisateurFabriquantSerializer(expected_user)
+        serializer = ActiveFabriquantSerilizer(expected_user)
         assert serializer.data == response.data
 
 
@@ -544,9 +545,8 @@ class RetrieveUtilisateursFabriquantTestCases(APITestCase):
         user1_renault = User.objects.get(email='user1@renault.dz')
         response = self.retrieve_user(user1_renault, 'user1@renault.dz')
         assert response.status_code == 200
-        print(response.data)
         expected_user = Fabriquant.objects.get(email='user1@renault.dz')
-        serializer = UtilisateurFabriquantSerializer(expected_user)
+        serializer = ActiveFabriquantSerilizer(expected_user)
         assert serializer.data == response.data
 
     def test_fail_retrieve_utilisateur_by_other_marque(self):
@@ -853,7 +853,6 @@ class WebAuthenticationTestCases(APITestCase):
         client.credentials(HTTP_AUTHORIZATION=self.create_authentication_header(access_token))
         response = client.get('/accounts/type')
         assert response.data['type'] == 'Utilisateur Fabriquant'
-        print(response.data)
 
     def test_fail_get_access_token_for_invalid_credentials(self):
         response, client = self.authenticate_user('admin@renault.dz', 'password')

@@ -48,7 +48,7 @@ class ListUtilisateurFabriquantView(ListAPIView):
         Les administrateur fabriquant peuvent voir leurs prores utilisateurs
         L'administrateur peut voir les utilisateurs de tout les fabriquants
     """
-    serializer_class = serializers.UtilisateurFabriquantSerializer
+    serializer_class = serializers.ActiveFabriquantSerilizer
     permission_classes = [permissions.IsUsersOwner, IsAuthenticated]
     authentication_classes = [OAuth2Authentication, ]
     lookup_field = 'marque'
@@ -93,7 +93,7 @@ class RUDUtilisateurFabriquant(RetrieveUpdateDestroyAPIView):
         return Fabriquant.objects.all()
 
     def get_serializer_class(self):
-        if self.request.method == 'PATCH':
+        if self.request.method == 'PATCH' or 'GET':
             return serializers.ActiveFabriquantSerilizer
         return self.serializer_class
 
