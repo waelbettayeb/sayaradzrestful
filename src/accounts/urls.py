@@ -11,6 +11,7 @@ urlpatterns = [
     path('fabriquant/utilisateur',views.FabriquantView.as_view()),
     path('fabriquant',views.AdminFabriquantCreation.as_view()),
     path('fabriquant/utilisateur/<str:email>',views.RUDUtilisateurFabriquant.as_view()),
-    path('type',views.UserType.as_view())
+    path('type',views.UserType.as_view()),
+    path('changepassword', views.ChangePasswordView.as_view()),
 
 ]

@@ -65,5 +65,9 @@ class AdministratuerSerializer(serializers.ModelSerializer):
         fields = ('password', 'email')
         extra_kwargs = {'password': {'write_only': True}}
 
+class ChangePasswordSerializer(serializers.Serializer):
+    new_password = serializers.CharField(required=True)
+    email = serializers.CharField(required=True)
+
 
 
