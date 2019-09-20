@@ -5,7 +5,7 @@ from django.test import TestCase
 from rest_framework.test import APITestCase, APIClient, APIRequestFactory, force_authenticate
 
 from accounts.models import Fabriquant, Administrateur, User
-from accounts.serializers import UtilisateurFabriquantSerializer
+from accounts.serializers import UtilisateurFabriquantSerializer, ActiveFabriquantSerilizer
 from . import views
 from marque.models import Marque
 from . import urls
@@ -69,8 +69,9 @@ class ListFabriquantTestCases(APITestCase):
         assert response.status_code == 200
         assert len(response.data) == 2
         user1 = Fabriquant.objects.get(email="user1@renault.dz")
-        serializer = UtilisateurFabriquantSerializer(user1)
+        serializer = ActiveFabriquantSerilizer(user1)
         assert serializer.data in response.data
+        print(response.data)
 
     def test_list_utilisateurs_fabriquant_admin(self):
         admin = Administrateur.objects.create_superuser(
@@ -93,7 +94,7 @@ class ListFabriquantTestCases(APITestCase):
         client = APIClient()
         response = client.get('/accounts/fabriquant/utlisateur/1')
         self.assertEqual(str(response.data['detail']), "Authentication credentials were not provided.")
-        assert response.status_code == 403
+        assert response.status_code == 401
 
     def test_fail_list_fabriquant_not_allowed(self):
         client = APIClient()
@@ -164,7 +165,7 @@ class CreateUtilisateurFabriquantTestCases(APITestCase):
         }
         response = client.post('/accounts/fabriquant/utilisateur', data)
         self.assertEqual(str(response.data['detail']), "Authentication credentials were not provided.")
-        assert response.status_code == 403
+        assert response.status_code == 401
 
     def test_fail_create_utilisateur_by_non_admin(self):
         client = APIClient()
@@ -523,9 +524,10 @@ class RetrieveUtilisateursFabriquantTestCases(APITestCase):
     def test_admin_can_retreive_utilisateur_fabriquant(self):
         admin = User.objects.get(email='admin@sayara.dz')
         response = self.retrieve_user(admin,'user1@renault.dz')
+
         assert response.status_code == 200
         expected_user = Fabriquant.objects.get(email='user1@renault.dz')
-        serializer = UtilisateurFabriquantSerializer(expected_user)
+        serializer = ActiveFabriquantSerilizer(expected_user)
         assert serializer.data == response.data
 
 
@@ -535,7 +537,7 @@ class RetrieveUtilisateursFabriquantTestCases(APITestCase):
         response = self.retrieve_user(admin_fabriquant,'user1@renault.dz')
         assert response.status_code == 200
         expected_user = Fabriquant.objects.get(email='user1@renault.dz')
-        serializer = UtilisateurFabriquantSerializer(expected_user)
+        serializer = ActiveFabriquantSerilizer(expected_user)
         assert serializer.data == response.data
 
 
@@ -544,7 +546,7 @@ class RetrieveUtilisateursFabriquantTestCases(APITestCase):
         response = self.retrieve_user(user1_renault, 'user1@renault.dz')
         assert response.status_code == 200
         expected_user = Fabriquant.objects.get(email='user1@renault.dz')
-        serializer = UtilisateurFabriquantSerializer(expected_user)
+        serializer = ActiveFabriquantSerilizer(expected_user)
         assert serializer.data == response.data
 
     def test_fail_retrieve_utilisateur_by_other_marque(self):
@@ -739,7 +741,7 @@ class CreateAdminFabriquantTestCases(APITestCase):
         Id_Marque = 1
         user = None
         response = self.create_admin_fabriquant(user, email=email, Id_Marque=Id_Marque)
-        assert response.status_code == 403
+        assert response.status_code == 401
         try:
             Fabriquant.objects.get(email="admin2@renault.dz")
         except:
@@ -769,7 +771,7 @@ class WebAuthenticationTestCases(APITestCase):
 
         client = APIClient()
         response = client.post('/accounts/token', data)
-        return response
+        return response,client
 
 
 
@@ -806,7 +808,7 @@ class WebAuthenticationTestCases(APITestCase):
 
     def test_admin_authentication(self):
 
-        response = self.authenticate_user('admin@sayara.dz','adminadmin')
+        response,client = self.authenticate_user('admin@sayara.dz','adminadmin')
         assert response.status_code == 200
         access_token = response.data['access_token']
         user = AccessToken.objects.get(token = access_token).user
@@ -814,10 +816,13 @@ class WebAuthenticationTestCases(APITestCase):
         assert user.is_admin_fabriquant == False
         assert user.is_fabriquant == False
         assert user.is_automobiliste == False
+        client.credentials(HTTP_AUTHORIZATION = self.create_authentication_header(access_token))
+        response = client.get('/accounts/type')
+        assert response.data['type'] == 'Administrateur'
 
     def test_admin_fabriquant_authentication(self):
         self.create_admin_fabriquant('admin@renault.dz','password',1)
-        response = self.authenticate_user('admin@renault.dz', 'password')
+        response,client = self.authenticate_user('admin@renault.dz', 'password')
 
         assert response.status_code == 200
         access_token = response.data['access_token']
@@ -828,10 +833,13 @@ class WebAuthenticationTestCases(APITestCase):
         assert user.is_automobiliste == False
         admin_fabriquant = Fabriquant.objects.get(email = user.email)
         assert admin_fabriquant.marque.Id_Marque == str(1)
+        client.credentials(HTTP_AUTHORIZATION=self.create_authentication_header(access_token))
+        response = client.get('/accounts/type')
+        assert response.data['type'] == 'Administrateur Fabriquant'
 
     def test_utilisatuer_fabriquant_authentication(self):
-        self.create_utlisateur_fabriquant('admin@renault.dz', 'password', 1)
-        response = self.authenticate_user('admin@renault.dz', 'password')
+        self.create_utlisateur_fabriquant('user@renault.dz', 'password', 1)
+        response,client = self.authenticate_user('user@renault.dz', 'password')
 
         assert response.status_code == 200
         access_token = response.data['access_token']
@@ -842,9 +850,12 @@ class WebAuthenticationTestCases(APITestCase):
         assert user.is_automobiliste == False
         admin_fabriquant = Fabriquant.objects.get(email=user.email)
         assert admin_fabriquant.marque.Id_Marque == str(1)
+        client.credentials(HTTP_AUTHORIZATION=self.create_authentication_header(access_token))
+        response = client.get('/accounts/type')
+        assert response.data['type'] == 'Utilisateur Fabriquant'
 
     def test_fail_get_access_token_for_invalid_credentials(self):
-        response = self.authenticate_user('admin@renault.dz', 'password')
+        response, client = self.authenticate_user('admin@renault.dz', 'password')
         assert response.status_code == 400
         expected_error = {
                         'error_description' :'Invalid credentials given.',

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'couleur',
     'tarif',
     'reservation',
+    'stock',
     #accounts handling
     'accounts',
     #social authentication

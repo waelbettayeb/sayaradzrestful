@@ -87,3 +87,9 @@ class CanUpdateUtilisateurFabriquant(permissions.BasePermission):
                 return False
             user_fabriquan = Fabriquant.objects.get(email=user.email)
             return str(user_fabriquan.email) == (obj.email)
+
+
+class CanSeeType(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_admin_fabriquant or request.user.is_fabriquant or request.user.is_admin
+

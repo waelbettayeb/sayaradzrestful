@@ -55,6 +55,7 @@ class ActiveFabriquantSerilizer(serializers.ModelSerializer):
     class Meta:
         model = models.Fabriquant
         fields = ('email', 'password', 'nom', 'prenom', 'adresse', 'tel', 'is_active')
+        read_only_fields = ('marque',)
         extra_kwargs = {'password': {'write_only': True}}
 
 
@@ -63,6 +64,10 @@ class AdministratuerSerializer(serializers.ModelSerializer):
         model = models.Administrateur
         fields = ('password', 'email')
         extra_kwargs = {'password': {'write_only': True}}
+
+class ChangePasswordSerializer(serializers.Serializer):
+    new_password = serializers.CharField(required=True)
+    email = serializers.CharField(required=True)
 
 
 
